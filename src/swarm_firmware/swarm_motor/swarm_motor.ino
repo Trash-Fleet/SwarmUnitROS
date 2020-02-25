@@ -1,6 +1,6 @@
 #include <ros.h>
 #include <std_msgs/Int32.h>
-//#include <std_msgs/Float32.h>
+#include <std_msgs/Float32.h>
 #include <SoftwareSerial.h>
 
 #define rxPin1 12  // pin 3 connects to motor controller TX  (not used in this example)
@@ -14,6 +14,42 @@
 
 #define TICKS_PER_REV 134.4 // ppr of motor encoder
 #define WHEEL_RADIUS 0.04 // radius of attached wheel (m)
+
+// PID Constants
+int motor1_p = 0;
+int motor1_i = 0;
+int motor1_d = 0;
+int motor1_punch = 0;
+int motor1_deadzone = 0;
+int motor1_i_clamp = 0;
+int motor1_out_clamp = 3200;
+float motor1_last, motor1_accumulate;
+
+int motor2_p = 0;
+int motor2_i = 0;
+int motor2_d = 0;
+int motor2_punch = 0;
+int motor2_deadzone = 0;
+int motor2_i_clamp = 0;
+int motor2_out_clamp = 3200;
+float motor2_last, motor2_accumulate;
+
+// Motor Variables
+int enc1_cur_ticks = 0;
+int enc1_prev_ticks = 0;
+int motor1_command = 0;
+float motor1_desired_speed = 0;
+float motor1_cur_speed = 0;
+
+int enc2_cur_ticks = 0;
+int enc2_prev_ticks = 0;
+int motor2_command = 0;
+float motor2_desired_speed = 0;
+float motor2_cur_speed = 0;
+
+// Timer variables
+int timer1_freq; 
+int timer1_counter;
 
 // MOTOR CONTROLLER HELPER FUNCTIONS
 SoftwareSerial smcSerial1 = SoftwareSerial(rxPin1, txPin1);
@@ -60,41 +96,80 @@ void setMotorSpeed(int speed, int motor)
 
 // ROS HELPER FUNCTIONS
 ros::NodeHandle nh;
-int cur_ticks = 0;
-int prev_ticks = 0;
-int desired_speed = 0;
-int cur_speed = 0;
 unsigned long prev_time;
 
-void speed1_callback( const std_msgs::Int32& msg){
-  setMotorSpeed(msg.data, 1);
+void speed1_callback( const std_msgs::Float32& msg){
+  motor1_desired_speed = msg.data;
+  // setMotorSpeed(msg.data, 1);
 }
 
-void speed2_callback( const std_msgs::Int32& msg){
-  setMotorSpeed(msg.data, 2);
+void speed2_callback( const std_msgs::Float32& msg){
+  motor2_desired_speed = msg.data;
+  // setMotorSpeed(msg.data, 2);
 }
 
 void checkEncoder1(){
     if (digitalRead(chBPin1) == HIGH) {
-      cur_ticks += 1;
+      enc1_cur_ticks += 1;
     } else {
-      cur_ticks -= 1;
+      enc1_cur_ticks -= 1;
     }
 }
 
 void checkEncoder2(){
     if (digitalRead(chBPin2) == HIGH) {
-      cur_ticks += 1;
+      enc2_cur_ticks += 1;
     } else {
-      cur_ticks -= 1;
+      enc2_cur_ticks -= 1;
     }
 }
 
-std_msgs::Int32 enc_msg;
-ros::Subscriber<std_msgs::Int32> sub1("motor1_vel", &speed1_callback);
-ros::Subscriber<std_msgs::Int32> sub2("motor2_vel", &speed2_callback);
-ros::Publisher pub("enc1", &enc_msg);
+// Define ROS publishers and subscribers
+std_msgs::Int32 enc1_msg;
+std_msgs::Int32 enc2_msg;
+ros::Publisher motor1_enc_pub("enc1", &enc1_msg);
+ros::Publisher motor2_enc_pub("enc2", &enc2_msg);
+ros::Subscriber<std_msgs::Float32> motor1_vel_sub("motor1_vel", &speed1_callback);
+ros::Subscriber<std_msgs::Float32> motor2_vel_sub("motor2_vel", &speed2_callback);
  
+// ISR for timer1
+// calculate velocity and perform PID update @ 10 Hz
+ISR(TIMER1_OVF_vect)
+{
+  TCNT1 = timer1_counter;   // reset timer
+
+  int enc1_diff = enc1_cur_ticks - enc1_prev_ticks;
+  int enc2_diff = enc2_cur_ticks - enc2_prev_ticks;
+
+  motor1_cur_speed = 60.0 * (enc1_diff / TICKS_PER_REV) / 0.1;
+  motor2_cur_speed = 60.0 * (enc2_diff / TICKS_PER_REV) / 0.1;
+
+  enc1_prev_ticks = enc1_cur_ticks;
+  enc2_prev_ticks = enc2_cur_ticks;
+
+  int motor1_pid =  pid(motor1_desired_speed, motor1_cur_speed, 
+                    motor1_p, motor1_i, motor1_d, 
+                    motor1_i_clamp, motor1_out_clamp, motor1_punch, motor1_deadzone, 
+                    &motor1_last, &motor1_accumulate);
+
+  int motor2_pid =  pid(motor2_desired_speed, motor2_cur_speed, 
+                    motor2_p, motor2_i, motor2_d, 
+                    motor2_i_clamp, motor2_out_clamp, motor2_punch, motor2_deadzone, 
+                    &motor2_last, &motor2_accumulate);
+
+  motor1_command += motor1_pid;
+  motor2_command += motor2_pid;
+
+  enc1_msg.data = enc1_cur_ticks;
+  enc2_msg.data = enc2_cur_ticks;
+
+  setMotorSpeed(motor1_command, 0);
+  setMotorSpeed(motor2_command, 1);
+
+  motor1_enc_pub.publish(&enc1_msg)
+  motor2_enc_pub.publish(&enc2_msg)
+}
+
 void setup()
 {
   pinMode(chAPin1, INPUT);
@@ -125,28 +200,26 @@ void setup()
   prev_time = millis();
 
   nh.initNode();
-  nh.subscribe(sub1);
-  nh.subscribe(sub2);
-  nh.advertise(pub);
+  nh.subscribe(motor1_vel_sub);
+  nh.subscribe(motor2_vel_sub);
+  nh.advertise(motor1_enc_pub);
+  nh.advertise(motor2_enc_pub);
+
+  // setup timers for velocity calculation
+  cli();//stop interrupts
+
+  TCCR1A = 0;
+  TCCR1B = 0;
+  timer1_counter = 65536 - (16000000 / 256 / timer1_freq);   // preload timer 65536 - 16MHz/256/2Hz (34286 for 0.5sec) (59286 for 0.1sec)
+  TCNT1 = timer1_counter;   // preload timer
+  TCCR1B |= (1 << CS12);    // 256 prescaler 
+  TIMSK1 |= (1 << TOIE1);   // enable timer overflow interrupt
+
+  sei();//allow interrupts
 }
  
 void loop()
-{
-//  if (millis() - prev_time > 100){
-//    unsigned long cur_time = millis();
-//    int tmp_ticks = cur_ticks;
-//    float cur_ang_vel = (tmp_ticks - prev_ticks)/TICKS_PER_REV/(cur_time - prev_time)*1000;
-//    float cur_vel = cur_ang_vel * WHEEL_RADIUS;  
-//    
-//    prev_time = cur_time;
-//    prev_ticks = tmp_ticks;
-//
-//    if ((cur_vel - de
-//    
-//    enc_msg.data = cur_vel;
-//    pub.publish(&enc_msg);
-//  }
-  
+{    
   nh.spinOnce();
   delay(1);
 }
