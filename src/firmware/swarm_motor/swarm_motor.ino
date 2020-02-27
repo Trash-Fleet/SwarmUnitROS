@@ -16,22 +16,22 @@
 #define WHEEL_RADIUS 0.04 // radius of attached wheel (m)
 
 // PID Constants
-int motor1_p = 0;
-int motor1_i = 0;
-int motor1_d = 0;
-int motor1_punch = 0;
-int motor1_deadzone = 0;
-int motor1_i_clamp = 0;
-int motor1_out_clamp = 3200;
+float motor1_p = 500;
+float motor1_i = 0;
+float motor1_d = 0;
+float motor1_punch = 0;
+float motor1_deadzone = 0;
+float motor1_i_clamp = 0;
+float motor1_out_clamp = 3200;
 float motor1_last, motor1_accumulate;
 
-int motor2_p = 0;
-int motor2_i = 0;
-int motor2_d = 0;
-int motor2_punch = 0;
-int motor2_deadzone = 0;
-int motor2_i_clamp = 0;
-int motor2_out_clamp = 3200;
+float motor2_p = 500;
+float motor2_i = 0;
+float motor2_d = 0;
+float motor2_punch = 0;
+float motor2_deadzone = 0;
+float motor2_i_clamp = 0;
+float motor2_out_clamp = 3200;
 float motor2_last, motor2_accumulate;
 
 // Motor Variables
@@ -48,7 +48,7 @@ float motor2_desired_speed = 0;
 float motor2_cur_speed = 0;
 
 // Timer variables
-int timer1_freq; 
+int timer1_freq = 10; 
 int timer1_counter;
 
 // MOTOR CONTROLLER HELPER FUNCTIONS
@@ -95,19 +95,19 @@ void setMotorSpeed(int speed, int motor)
 }
 
 // ROS HELPER FUNCTIONS
-ros::NodeHandle nh;
-unsigned long prev_time;
-
-void speed1_callback( const std_msgs::Float32& msg){
-  motor1_desired_speed = msg.data;
-  // setMotorSpeed(msg.data, 1);
-}
-
-void speed2_callback( const std_msgs::Float32& msg){
-  motor2_desired_speed = msg.data;
-  // setMotorSpeed(msg.data, 2);
-}
-
+//ros::NodeHandle nh;
+//unsigned long prev_time;
+//
+//void speed1_callback( const std_msgs::Float32& msg){
+//  motor1_desired_speed = msg.data;
+//  // setMotorSpeed(msg.data, 1);
+//}
+//
+//void speed2_callback( const std_msgs::Float32& msg){
+//  motor2_desired_speed = msg.data;
+//  // setMotorSpeed(msg.data, 2);
+//}
+//
 void checkEncoder1(){
     if (digitalRead(chBPin1) == HIGH) {
       enc1_cur_ticks += 1;
@@ -118,19 +118,21 @@ void checkEncoder1(){
 
 void checkEncoder2(){
     if (digitalRead(chBPin2) == HIGH) {
-      enc2_cur_ticks += 1;
-    } else {
       enc2_cur_ticks -= 1;
+    } else {
+      enc2_cur_ticks += 1;
     }
 }
 
 // Define ROS publishers and subscribers
-std_msgs::Int32 enc1_msg;
-std_msgs::Int32 enc2_msg;
-ros::Publisher motor1_enc_pub("enc1", &enc1_msg);
-ros::Publisher motor2_enc_pub("enc2", &enc2_msg);
-ros::Subscriber<std_msgs::Float32> motor1_vel_sub("motor1_vel", &speed1_callback);
-ros::Subscriber<std_msgs::Float32> motor2_vel_sub("motor2_vel", &speed2_callback);
+//std_msgs::Int32 enc1_msg;
+//std_msgs::Int32 enc2_msg;
+//std_msgs::Float32 enc1_msg;
+//std_msgs::Float32 enc2_msg;
+//ros::Publisher motor1_enc_pub("enc1", &enc1_msg);
+//ros::Publisher motor2_enc_pub("enc2", &enc2_msg);
+//ros::Subscriber<std_msgs::Float32> motor1_vel_sub("motor1_vel", &speed1_callback);
+//ros::Subscriber<std_msgs::Float32> motor2_vel_sub("motor2_vel", &speed2_callback);
  
 // ISR for timer1
 // calculate velocity and perform PID update @ 10 Hz
@@ -141,33 +143,56 @@ ISR(TIMER1_OVF_vect)
   int enc1_diff = enc1_cur_ticks - enc1_prev_ticks;
   int enc2_diff = enc2_cur_ticks - enc2_prev_ticks;
 
-  motor1_cur_speed = 60.0 * (enc1_diff / TICKS_PER_REV) / 0.1;
-  motor2_cur_speed = 60.0 * (enc2_diff / TICKS_PER_REV) / 0.1;
+  motor1_cur_speed = 2 * PI * WHEEL_RADIUS * (enc1_diff / TICKS_PER_REV) / 0.1;
+  motor2_cur_speed = 2 * PI * WHEEL_RADIUS * (enc2_diff / TICKS_PER_REV) / 0.1;
 
   enc1_prev_ticks = enc1_cur_ticks;
   enc2_prev_ticks = enc2_cur_ticks;
 
-  int motor1_pid =  pid(motor1_desired_speed, motor1_cur_speed, 
+  if (motor1_desired_speed == 0){
+    motor1_command = 0;
+  }
+  else {
+    int motor1_pid =  pid(motor1_desired_speed, motor1_cur_speed, 
                     motor1_p, motor1_i, motor1_d, 
                     motor1_i_clamp, motor1_out_clamp, motor1_punch, motor1_deadzone, 
-                    &motor1_last, &motor1_accumulate);
+                    &motor1_last, &motor1_accumulate);  
+                    
+    motor1_command += motor1_pid;
+  }
 
-  int motor2_pid =  pid(motor2_desired_speed, motor2_cur_speed, 
+  if (motor2_desired_speed == 0){
+    motor2_command = 0;
+  }
+  else{
+    int motor2_pid =  pid(motor2_desired_speed, motor2_cur_speed, 
                     motor2_p, motor2_i, motor2_d, 
                     motor2_i_clamp, motor2_out_clamp, motor2_punch, motor2_deadzone, 
                     &motor2_last, &motor2_accumulate);
+                    
+    motor2_command += motor2_pid;
+  }
 
-  motor1_command += motor1_pid;
-  motor2_command += motor2_pid;
+//  enc1_msg.data = enc1_cur_ticks;
+//  enc2_msg.data = enc2_cur_ticks;
 
-  enc1_msg.data = enc1_cur_ticks;
-  enc2_msg.data = enc2_cur_ticks;
+//  enc1_msg.data = motor1_cur_speed;
+//  enc2_msg.data = motor2_cur_speed;
 
-  setMotorSpeed(motor1_command, 0);
-  setMotorSpeed(motor2_command, 1);
+  setMotorSpeed(motor1_command, 1);
+  setMotorSpeed(motor2_command, 2);
 
-  motor1_enc_pub.publish(&enc1_msg)
-  motor2_enc_pub.publish(&enc2_msg)
+  Serial.print(motor1_command);
+  Serial.print(",");
+  Serial.print(motor2_command);
+  Serial.print(",");
+  Serial.print(motor1_cur_speed);
+  Serial.print(",");
+  Serial.print(motor2_cur_speed);
+  Serial.print("\n");
+
+//  motor1_enc_pub.publish(&enc1_msg);
+//  motor2_enc_pub.publish(&enc2_msg);
 }
 
 void setup()
@@ -197,13 +222,13 @@ void setup()
 
   attachInterrupt(digitalPinToInterrupt(chAPin1), checkEncoder1, RISING); 
   attachInterrupt(digitalPinToInterrupt(chAPin2), checkEncoder2, RISING); 
-  prev_time = millis();
+//  prev_time = millis();
 
-  nh.initNode();
-  nh.subscribe(motor1_vel_sub);
-  nh.subscribe(motor2_vel_sub);
-  nh.advertise(motor1_enc_pub);
-  nh.advertise(motor2_enc_pub);
+//  nh.initNode();
+//  nh.subscribe(motor1_vel_sub);
+//  nh.subscribe(motor2_vel_sub);
+//  nh.advertise(motor1_enc_pub);
+//  nh.advertise(motor2_enc_pub);
 
   // setup timers for velocity calculation
   cli();//stop interrupts
@@ -216,10 +241,33 @@ void setup()
   TIMSK1 |= (1 << TOIE1);   // enable timer overflow interrupt
 
   sei();//allow interrupts
+
+  // initialize Serial w/ baud 9600
+  Serial.begin(115200);
 }
  
 void loop()
 {    
-  nh.spinOnce();
-  delay(1);
+  while(Serial.available() > 0){
+    // read velocities
+//    int val1 = Serial.parseInt();
+//    int val2 = Serial.parseInt();
+    
+    motor1_desired_speed = Serial.parseFloat();
+    motor2_desired_speed = Serial.parseFloat();
+    
+    char r = Serial.read();
+    if(r == '\n'){}
+
+//    setMotorSpeed(val1,1);
+//    setMotorSpeed(val2,2);
+//    delay(1);
+
+//    Serial.print(val1);
+//    Serial.print(",");
+//    Serial.print(val2);
+//    Serial.print("\n");
+  }  
+//  nh.spinOnce();
+//  delay(10);
 }
