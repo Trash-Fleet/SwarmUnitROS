@@ -1,6 +1,4 @@
  
 <launch>
-    <node name="steering" pkg="rosserial_python" type="serial_node.py" required="true">
-        <param name="port" value="/dev/ttyACM0"/>
-    </node>
+    <node name="motor_parser" pkg="parsing" type="motor_parser.py" required="true"/>
 </launch>
