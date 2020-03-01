@@ -4,9 +4,10 @@ import rospy
 import serial
 import sys
 from std_msgs.msg import Int32, Float32
+from sensor_msgs.msg import Imu
 
 SERIAL_BAUD = 115200
-SERIAL_PORT = "/dev/ttyACM1"
+SERIAL_PORT = "/dev/ttyACM0"
 
 class MotorParserNode(object):
     def __init__(self):
@@ -20,13 +21,15 @@ class MotorParserNode(object):
 
         self.motor1_vel_pub = rospy.Publisher('motor1/fb/vel', Float32, queue_size=10)
         self.motor1_enc_pub = rospy.Publisher('motor1/fb/enc', Int32, queue_size=10)
-        rospy.Subscriber("motor1/cmd/vel", Int32, self.motor1_vel_callback)
+        rospy.Subscriber("motor1/cmd/vel", Float32, self.motor1_vel_callback)
 
         self.motor2_vel_pub = rospy.Publisher('motor2/fb/vel', Float32, queue_size=10)
         self.motor2_enc_pub = rospy.Publisher('motor2/fb/enc', Int32, queue_size=10)
-        rospy.Subscriber("motor2/cmd/vel", Int32, self.motor2_vel_callback)
+        rospy.Subscriber("motor2/cmd/vel", Float32, self.motor2_vel_callback)
 
-        rospy.init_node('talker', anonymous=True)
+        self.imu_pub = rospy.Publisher('imu', Imu, queue_size=10)
+
+        rospy.init_node('motor_parser', anonymous=True)
         rate = rospy.Rate(10) # 10hz
         while not rospy.is_shutdown():
             try:
@@ -39,7 +42,14 @@ class MotorParserNode(object):
                 self.motor1_vel_pub.publish(float(vals[2]))
                 self.motor2_vel_pub.publish(float(vals[3]))
 
-                self.ser.write(b'%d,%d \n' % (self.motor1_vel, self.motor2_vel))
+                imu_msg = Imu()
+                imu_msg.orientation.w = float(vals[4])
+                imu_msg.orientation.x = float(vals[5])
+                imu_msg.orientation.y = float(vals[6])
+                imu_msg.orientation.z = float(vals[7])
+                self.imu_pub.publish(imu_msg)
+
+                self.ser.write(b'%f,%f\n' % (self.motor1_vel, self.motor2_vel))
             except:
                 continue
             rate.sleep()

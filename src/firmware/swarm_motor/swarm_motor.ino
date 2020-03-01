@@ -2,6 +2,10 @@
 #include <std_msgs/Int32.h>
 #include <std_msgs/Float32.h>
 #include <SoftwareSerial.h>
+#include <Wire.h>
+#include <Adafruit_Sensor.h>
+#include <Adafruit_BNO055.h>
+#include <utility/imumaths.h>
 
 #define rxPin1 12  // pin 3 connects to motor controller TX  (not used in this example)
 #define txPin1 11  // pin 4 connects to motor controller RX
@@ -13,7 +17,7 @@
 #define chBPin2 5 // chB pin on motor encoder1
 
 #define TICKS_PER_REV 134.4 // ppr of motor encoder
-#define WHEEL_RADIUS 0.04 // radius of attached wheel (m)
+#define WHEEL_RADIUS 0.05 // radius of attached wheel (m)
 
 // PID Constants
 float motor1_p = 500;
@@ -50,6 +54,11 @@ float motor2_cur_speed = 0;
 // Timer variables
 int timer1_freq = 10; 
 int timer1_counter;
+unsigned long cur_time;
+
+// BNO055 variables
+Adafruit_BNO055 bno = Adafruit_BNO055(55, 0x28);
+float imu_quat[4];
 
 // MOTOR CONTROLLER HELPER FUNCTIONS
 SoftwareSerial smcSerial1 = SoftwareSerial(rxPin1, txPin1);
@@ -67,6 +76,7 @@ void exitSafeStart()
 void setMotorSpeed(int speed, int motor)
 {
   if (motor == 1){
+    speed = speed * -1;
     if (speed < 0)
     {
       smcSerial1.write(0x86);  // motor reverse command
@@ -94,22 +104,8 @@ void setMotorSpeed(int speed, int motor)
   }
 }
 
-// ROS HELPER FUNCTIONS
-//ros::NodeHandle nh;
-//unsigned long prev_time;
-//
-//void speed1_callback( const std_msgs::Float32& msg){
-//  motor1_desired_speed = msg.data;
-//  // setMotorSpeed(msg.data, 1);
-//}
-//
-//void speed2_callback( const std_msgs::Float32& msg){
-//  motor2_desired_speed = msg.data;
-//  // setMotorSpeed(msg.data, 2);
-//}
-//
 void checkEncoder1(){
-    if (digitalRead(chBPin1) == HIGH) {
+    if (digitalRead(chBPin1) == LOW) {
       enc1_cur_ticks += 1;
     } else {
       enc1_cur_ticks -= 1;
@@ -117,22 +113,12 @@ void checkEncoder1(){
 }
 
 void checkEncoder2(){
-    if (digitalRead(chBPin2) == HIGH) {
+    if (digitalRead(chBPin2) == LOW) {
       enc2_cur_ticks -= 1;
     } else {
       enc2_cur_ticks += 1;
     }
 }
-
-// Define ROS publishers and subscribers
-//std_msgs::Int32 enc1_msg;
-//std_msgs::Int32 enc2_msg;
-//std_msgs::Float32 enc1_msg;
-//std_msgs::Float32 enc2_msg;
-//ros::Publisher motor1_enc_pub("enc1", &enc1_msg);
-//ros::Publisher motor2_enc_pub("enc2", &enc2_msg);
-//ros::Subscriber<std_msgs::Float32> motor1_vel_sub("motor1_vel", &speed1_callback);
-//ros::Subscriber<std_msgs::Float32> motor2_vel_sub("motor2_vel", &speed2_callback);
  
 // ISR for timer1
 // calculate velocity and perform PID update @ 10 Hz
@@ -173,26 +159,25 @@ ISR(TIMER1_OVF_vect)
     motor2_command += motor2_pid;
   }
 
-//  enc1_msg.data = enc1_cur_ticks;
-//  enc2_msg.data = enc2_cur_ticks;
-
-//  enc1_msg.data = motor1_cur_speed;
-//  enc2_msg.data = motor2_cur_speed;
-
   setMotorSpeed(motor1_command, 1);
   setMotorSpeed(motor2_command, 2);
 
-  Serial.print(motor1_command);
+  Serial.print(enc1_cur_ticks);
   Serial.print(",");
-  Serial.print(motor2_command);
+  Serial.print(enc2_cur_ticks);
   Serial.print(",");
   Serial.print(motor1_cur_speed);
   Serial.print(",");
   Serial.print(motor2_cur_speed);
+  Serial.print(",");
+  Serial.print(imu_quat[0], 4);
+  Serial.print(",");
+  Serial.print(imu_quat[1], 4);
+  Serial.print(",");
+  Serial.print(imu_quat[2], 4);
+  Serial.print(",");
+  Serial.print(imu_quat[3], 4);
   Serial.print("\n");
-
-//  motor1_enc_pub.publish(&enc1_msg);
-//  motor2_enc_pub.publish(&enc2_msg);
 }
 
 void setup()
@@ -201,6 +186,10 @@ void setup()
   pinMode(chBPin1, INPUT);
   pinMode(chAPin2, INPUT);
   pinMode(chBPin2, INPUT);
+
+  // initialize Serial w/ baud 115200
+  Serial.begin(115200);
+  Serial.println("Initializing...");
   
   // Initialize software serial object with baud rate of 19.2 kbps.
   smcSerial1.begin(19200);
@@ -222,17 +211,23 @@ void setup()
 
   attachInterrupt(digitalPinToInterrupt(chAPin1), checkEncoder1, RISING); 
   attachInterrupt(digitalPinToInterrupt(chAPin2), checkEncoder2, RISING); 
-//  prev_time = millis();
 
-//  nh.initNode();
-//  nh.subscribe(motor1_vel_sub);
-//  nh.subscribe(motor2_vel_sub);
-//  nh.advertise(motor1_enc_pub);
-//  nh.advertise(motor2_enc_pub);
+  /* Initialise the sensor */
+  Serial.println("Initializing BNO055...");
+  if(!bno.begin())
+  {
+    /* There was a problem detecting the BNO055 ... check your connections */
+    Serial.print("Ooops, no BNO055 detected ... Check your wiring or I2C ADDR!");
+    while(1);
+  }
+  
+  delay(1000);
+    
+  bno.setExtCrystalUse(true);
+  Serial.println("Initialized BNO055...");
 
   // setup timers for velocity calculation
   cli();//stop interrupts
-
   TCCR1A = 0;
   TCCR1B = 0;
   timer1_counter = 65536 - (16000000 / 256 / timer1_freq);   // preload timer 65536 - 16MHz/256/2Hz (34286 for 0.5sec) (59286 for 0.1sec)
@@ -242,8 +237,7 @@ void setup()
 
   sei();//allow interrupts
 
-  // initialize Serial w/ baud 9600
-  Serial.begin(115200);
+  cur_time = millis();  
 }
  
 void loop()
@@ -267,7 +261,17 @@ void loop()
 //    Serial.print(",");
 //    Serial.print(val2);
 //    Serial.print("\n");
-  }  
-//  nh.spinOnce();
-//  delay(10);
+  }
+
+  if (millis() - cur_time > 100){
+    imu::Quaternion quat = bno.getQuat();
+ 
+    imu_quat[0] = quat.w();
+    imu_quat[1] = quat.x();
+    imu_quat[2] = quat.y();
+    imu_quat[3] = quat.z();
+    
+    cur_time = millis();
+  }
+  
 }
