@@ -33,7 +33,7 @@ class TeleopParser(object):
         else:
             self.v = 0
 
-        if abs(msg.axes[0]) > 0.05:
+        if abs(msg.axes[0]) > 0.09:
             self.w = msg.axes[0] * 0.5
         else:
             self.w = 0

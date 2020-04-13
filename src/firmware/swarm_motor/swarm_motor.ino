@@ -1,6 +1,4 @@
-#include <ros.h>
-#include <std_msgs/Int32.h>
-#include <std_msgs/Float32.h>
+#include <Encoder.h>
 #include <SoftwareSerial.h>
 #include <Wire.h>
 #include <Adafruit_Sensor.h>
@@ -16,11 +14,11 @@
 #define chAPin2 3 // chA pin on motor encoder
 #define chBPin2 5 // chB pin on motor encoder1
 
-#define TICKS_PER_REV 134.4 // ppr of motor encoder
+#define TICKS_PER_REV 537.6 // ppr of motor encoder
 #define WHEEL_RADIUS 0.05 // radius of attached wheel (m)
 
 // PID Constants
-float motor1_p = 500;
+float motor1_p = 400;
 float motor1_i = 0;
 float motor1_d = 0;
 float motor1_punch = 0;
@@ -42,17 +40,21 @@ float motor2_last, motor2_accumulate;
 int enc1_cur_ticks = 0;
 int enc1_prev_ticks = 0;
 int motor1_command = 0;
-float motor1_desired_speed = 0;
-float motor1_cur_speed = 0;
+double motor1_desired_speed = 0;
+double motor1_cur_speed = 0;
 
 int enc2_cur_ticks = 0;
 int enc2_prev_ticks = 0;
 int motor2_command = 0;
-float motor2_desired_speed = 0;
-float motor2_cur_speed = 0;
+double motor2_desired_speed = 0;
+double motor2_cur_speed = 0;
+
+Encoder enc1(chAPin1, chBPin1);
+Encoder enc2(chAPin2, chBPin2);
 
 // Timer variables
-int timer1_freq = 10; 
+int timer1_freq = 50; 
+double dt = 0.02;
 int timer1_counter;
 unsigned long cur_time;
 
@@ -126,11 +128,14 @@ ISR(TIMER1_OVF_vect)
 {
   TCNT1 = timer1_counter;   // reset timer
 
-  int enc1_diff = enc1_cur_ticks - enc1_prev_ticks;
-  int enc2_diff = enc2_cur_ticks - enc2_prev_ticks;
+  enc1_cur_ticks = -enc1.read();
+  enc2_cur_ticks = enc2.read();
 
-  motor1_cur_speed = 2 * PI * WHEEL_RADIUS * (enc1_diff / TICKS_PER_REV) / 0.1;
-  motor2_cur_speed = 2 * PI * WHEEL_RADIUS * (enc2_diff / TICKS_PER_REV) / 0.1;
+  double enc1_diff = enc1_cur_ticks - enc1_prev_ticks;
+  double enc2_diff = enc2_cur_ticks - enc2_prev_ticks;
+
+  motor1_cur_speed = 2 * PI * WHEEL_RADIUS * (enc1_diff / TICKS_PER_REV) / dt;
+  motor2_cur_speed = 2 * PI * WHEEL_RADIUS * (enc2_diff / TICKS_PER_REV) / dt;
 
   enc1_prev_ticks = enc1_cur_ticks;
   enc2_prev_ticks = enc2_cur_ticks;
@@ -159,16 +164,16 @@ ISR(TIMER1_OVF_vect)
     motor2_command += motor2_pid;
   }
 
-  setMotorSpeed(motor1_command, 1);
-  setMotorSpeed(motor2_command, 2);
+   setMotorSpeed(motor1_command, 1);
+   setMotorSpeed(motor2_command, 2);
 
   Serial.print(enc1_cur_ticks);
   Serial.print(",");
   Serial.print(enc2_cur_ticks);
   Serial.print(",");
-  Serial.print(motor1_cur_speed);
+  Serial.print(motor1_cur_speed, 4);
   Serial.print(",");
-  Serial.print(motor2_cur_speed);
+  Serial.print(motor2_cur_speed, 4);
   Serial.print(",");
   Serial.print(imu_quat[0], 4);
   Serial.print(",");
@@ -209,8 +214,8 @@ void setup()
   // clears the safe-start violation and lets the motor run.
   exitSafeStart();
 
-  attachInterrupt(digitalPinToInterrupt(chAPin1), checkEncoder1, RISING); 
-  attachInterrupt(digitalPinToInterrupt(chAPin2), checkEncoder2, RISING); 
+//  attachInterrupt(digitalPinToInterrupt(chAPin1), checkEncoder1, RISING); 
+//  attachInterrupt(digitalPinToInterrupt(chAPin2), checkEncoder2, RISING); 
 
   /* Initialise the sensor */
   Serial.println("Initializing BNO055...");
@@ -244,18 +249,18 @@ void loop()
 {    
   while(Serial.available() > 0){
     // read velocities
-//    int val1 = Serial.parseInt();
-//    int val2 = Serial.parseInt();
+//   int val1 = Serial.parseInt();
+//   int val2 = Serial.parseInt();
     
-    motor1_desired_speed = Serial.parseFloat();
-    motor2_desired_speed = Serial.parseFloat();
+     motor1_desired_speed = Serial.parseFloat();
+     motor2_desired_speed = Serial.parseFloat();
     
     char r = Serial.read();
     if(r == '\n'){}
 
-//    setMotorSpeed(val1,1);
-//    setMotorSpeed(val2,2);
-//    delay(1);
+//   setMotorSpeed(val1,1);
+//   setMotorSpeed(val2,2);
+//   delay(1);
 
 //    Serial.print(val1);
 //    Serial.print(",");

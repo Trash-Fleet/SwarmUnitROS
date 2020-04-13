@@ -8,8 +8,7 @@ import numpy as np
 import tf2_ros
 
 from std_msgs.msg import Float64, Int32
-from nav_msgs.msg import Odometry
-from geometry_msgs.msg import TransformStamped
+from geometry_msgs.msg import Pose, TransformStamped
 from sensor_msgs.msg import Imu
 
 from tf.transformations import euler_from_quaternion, quaternion_from_euler
@@ -20,10 +19,10 @@ vel_pub = None
 # Constants
 p = 0.2
 d = 0
-enc_tpr = 1024.0
-enc_radius = 0.030825
+enc_tpr = 537.6
+enc_radius = 0.05 # 
 enc_ticks_to_m = 2.0 * math.pi * enc_radius / enc_tpr
-wheel_dist = 0.152
+wheel_dist = 0.34 # 34cm
 
 # Calculation variables
 left_enc = None
@@ -66,7 +65,7 @@ def main():
     rospy.Subscriber("motor2/fb/enc", Int32, enc2_callback) # right
     rospy.Subscriber("imu", Imu, imu_callback)
 
-    odom_pub = rospy.Publisher("odom", Odometry, queue_size=10)
+    pose_pub = rospy.Publisher("base/pose", Pose, queue_size=10)
 
     rate = rospy.Rate(10) # 10hz
 
@@ -138,21 +137,18 @@ def main():
 
         broadcaster.sendTransform(tf_msg)
 
-        # send Odometry message to ROS on /odom
-        new_msg = Odometry()
-        new_msg.header.stamp = rospy.Time.now()
-        new_msg.header.frame_id = "odom"
-        new_msg.child_frame_id = "base_link"
-        new_msg.pose.pose.position.x = state[0]
-        new_msg.pose.pose.position.y = state[1]
-        new_msg.pose.pose.position.z = 0
+        # send Pose message to ROS on /base/pose
+        new_msg = Pose()
+        new_msg.position.x = state[0]
+        new_msg.position.y = state[1]
+        new_msg.position.z = 0
 
-        new_msg.pose.pose.orientation.x = imu_quaternion[0]
-        new_msg.pose.pose.orientation.y = imu_quaternion[1]
-        new_msg.pose.pose.orientation.z = imu_quaternion[2]
-        new_msg.pose.pose.orientation.w = imu_quaternion[3]
+        new_msg.orientation.x = imu_quaternion[0]
+        new_msg.orientation.y = imu_quaternion[1]
+        new_msg.orientation.z = imu_quaternion[2]
+        new_msg.orientation.w = imu_quaternion[3]
 
-        odom_pub.publish(new_msg)
+        pose_pub.publish(new_msg)
 
         rate.sleep()
 
