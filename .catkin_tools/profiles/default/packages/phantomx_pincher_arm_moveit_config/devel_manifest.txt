@@ -1,0 +1,5 @@
+phantomx_pincher_arm/phantomx_pincher_arm_moveit_config
+/home/trashfleet/Documents/SwarmUnitROS/devel/.private/phantomx_pincher_arm_moveit_config/cmake.lock /home/trashfleet/Documents/SwarmUnitROS/devel/./cmake.lock
+/home/trashfleet/Documents/SwarmUnitROS/devel/.private/phantomx_pincher_arm_moveit_config/share/phantomx_pincher_arm_moveit_config/cmake/phantomx_pincher_arm_moveit_configConfig.cmake /home/trashfleet/Documents/SwarmUnitROS/devel/share/phantomx_pincher_arm_moveit_config/cmake/phantomx_pincher_arm_moveit_configConfig.cmake
+/home/trashfleet/Documents/SwarmUnitROS/devel/.private/phantomx_pincher_arm_moveit_config/share/phantomx_pincher_arm_moveit_config/cmake/phantomx_pincher_arm_moveit_configConfig-version.cmake /home/trashfleet/Documents/SwarmUnitROS/devel/share/phantomx_pincher_arm_moveit_config/cmake/phantomx_pincher_arm_moveit_configConfig-version.cmake
+/home/trashfleet/Documents/SwarmUnitROS/devel/.private/phantomx_pincher_arm_moveit_config/lib/pkgconfig/phantomx_pincher_arm_moveit_config.pc /home/trashfleet/Documents/SwarmUnitROS/devel/lib/pkgconfig/phantomx_pincher_arm_moveit_config.pc

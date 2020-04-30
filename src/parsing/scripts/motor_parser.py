@@ -7,7 +7,7 @@ from std_msgs.msg import Int32, Float32
 from sensor_msgs.msg import Imu
 
 SERIAL_BAUD = 115200
-SERIAL_PORT = "/dev/ttyACM0"
+SERIAL_PORT = "/dev/serial/by-id/usb-Arduino__www.arduino.cc__0043_55330333930351819242-if00"
 
 class MotorParserNode(object):
     def __init__(self):
@@ -30,7 +30,7 @@ class MotorParserNode(object):
         self.imu_pub = rospy.Publisher('imu', Imu, queue_size=10)
 
         rospy.init_node('motor_parser', anonymous=True)
-        rate = rospy.Rate(10) # 10hz
+        rate = rospy.Rate(25) # 10hz
         while not rospy.is_shutdown():
             try:
                 msg = self.ser.readline()
@@ -49,7 +49,7 @@ class MotorParserNode(object):
                 imu_msg.orientation.z = float(vals[7])
                 self.imu_pub.publish(imu_msg)
 
-                self.ser.write(b'%f,%f\n' % (self.motor1_vel, self.motor2_vel))
+                self.ser.write(b'L%f,R%f\n' % (self.motor1_vel, self.motor2_vel))
             except:
                 continue
             rate.sleep()

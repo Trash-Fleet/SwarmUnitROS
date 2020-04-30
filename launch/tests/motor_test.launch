@@ -1,6 +1,7 @@
  
 <launch>
     <node name="motor_parser" pkg="parsing" type="motor_parser.py" required="true"/>
-    <node name="teleop_parser" pkg="parsing" type="teleop_parser.py" required="true"/>
+<!--    <node name="teleop_parser" pkg="parsing" type="teleop_parser.py" required="true"/>-->
     <node name="base_localizer" pkg="localization" type="base_localizer.py" required="true"/>
+    <node name="base_planner" pkg="planning" type="base_planner.py" required="true"/>
 </launch>

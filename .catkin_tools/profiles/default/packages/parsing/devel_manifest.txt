@@ -1,0 +1,5 @@
+parsing
+/home/trashfleet/Documents/SwarmUnitROS/devel/.private/parsing/cmake.lock /home/trashfleet/Documents/SwarmUnitROS/devel/./cmake.lock
+/home/trashfleet/Documents/SwarmUnitROS/devel/.private/parsing/share/parsing/cmake/parsingConfig-version.cmake /home/trashfleet/Documents/SwarmUnitROS/devel/share/parsing/cmake/parsingConfig-version.cmake
+/home/trashfleet/Documents/SwarmUnitROS/devel/.private/parsing/share/parsing/cmake/parsingConfig.cmake /home/trashfleet/Documents/SwarmUnitROS/devel/share/parsing/cmake/parsingConfig.cmake
+/home/trashfleet/Documents/SwarmUnitROS/devel/.private/parsing/lib/pkgconfig/parsing.pc /home/trashfleet/Documents/SwarmUnitROS/devel/lib/pkgconfig/parsing.pc

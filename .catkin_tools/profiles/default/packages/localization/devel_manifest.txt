@@ -1,0 +1,5 @@
+localization
+/home/trashfleet/Documents/SwarmUnitROS/devel/.private/localization/cmake.lock /home/trashfleet/Documents/SwarmUnitROS/devel/./cmake.lock
+/home/trashfleet/Documents/SwarmUnitROS/devel/.private/localization/share/localization/cmake/localizationConfig.cmake /home/trashfleet/Documents/SwarmUnitROS/devel/share/localization/cmake/localizationConfig.cmake
+/home/trashfleet/Documents/SwarmUnitROS/devel/.private/localization/share/localization/cmake/localizationConfig-version.cmake /home/trashfleet/Documents/SwarmUnitROS/devel/share/localization/cmake/localizationConfig-version.cmake
+/home/trashfleet/Documents/SwarmUnitROS/devel/.private/localization/lib/pkgconfig/localization.pc /home/trashfleet/Documents/SwarmUnitROS/devel/lib/pkgconfig/localization.pc

@@ -1,0 +1,5 @@
+phantomx_pincher_arm/phantomx_pincher_arm_description
+/home/trashfleet/Documents/SwarmUnitROS/devel/.private/phantomx_pincher_arm_description/cmake.lock /home/trashfleet/Documents/SwarmUnitROS/devel/./cmake.lock
+/home/trashfleet/Documents/SwarmUnitROS/devel/.private/phantomx_pincher_arm_description/share/phantomx_pincher_arm_description/cmake/phantomx_pincher_arm_descriptionConfig.cmake /home/trashfleet/Documents/SwarmUnitROS/devel/share/phantomx_pincher_arm_description/cmake/phantomx_pincher_arm_descriptionConfig.cmake
+/home/trashfleet/Documents/SwarmUnitROS/devel/.private/phantomx_pincher_arm_description/share/phantomx_pincher_arm_description/cmake/phantomx_pincher_arm_descriptionConfig-version.cmake /home/trashfleet/Documents/SwarmUnitROS/devel/share/phantomx_pincher_arm_description/cmake/phantomx_pincher_arm_descriptionConfig-version.cmake
+/home/trashfleet/Documents/SwarmUnitROS/devel/.private/phantomx_pincher_arm_description/lib/pkgconfig/phantomx_pincher_arm_description.pc /home/trashfleet/Documents/SwarmUnitROS/devel/lib/pkgconfig/phantomx_pincher_arm_description.pc

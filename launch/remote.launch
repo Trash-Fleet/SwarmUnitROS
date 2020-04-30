@@ -1,0 +1,5 @@
+<launch>
+    <include file="$(find config)/launch/sensors.launch"/>
+    <include file="$(find config)/launch/odom.launch"/>
+    <include file="$(find config)/launch/teleop.launch"/>
+</launch>

@@ -1,0 +1,281 @@
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:[m[K In member function ‘[01m[Kvirtual bool ikfast_kinematics_plugin::IKFastKinematicsPlugin::initialize(const string&, const string&, const string&, const string&, double)[m[K’:
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:216:86:[m[K [01;35m[Kwarning: [m[K‘[01m[Kvirtual void kinematics::KinematicsBase::setValues(const string&, const string&, const string&, const string&, double)[m[K’ is deprecated [[01;35m[K-Wdeprecated-declarations[m[K]
+   setValues(robot_description, group_name, base_name, tip_name, search_discretization[01;35m[K)[m[K;
+                                                                                      [01;35m[K^[m[K
+In file included from [01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:49:0[m[K:
+[01m[K/opt/ros/melodic/include/moveit/kinematics_base/kinematics_base.h:339:34:[m[K [01;36m[Knote: [m[Kdeclared here
+   MOVEIT_DEPRECATED virtual void [01;36m[KsetValues[m[K(const std::string& robot_description, const std::string& group_name,
+                                  [01;36m[K^~~~~~~~~[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:253:98:[m[K [01;35m[Kwarning: [m[K‘[01m[Kkinematics::KinematicsBase::tip_frame_[m[K’ is deprecated [[01;35m[K-Wdeprecated-declarations[m[K]
+   boost::shared_ptr<urdf::Link> link = boost::const_pointer_cast<urdf::Link>(robot_model.getLink([01;35m[Ktip_frame_[m[K));
+                                                                                                  [01;35m[K^~~~~~~~~~[m[K
+In file included from [01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:49:0[m[K:
+[01m[K/opt/ros/melodic/include/moveit/kinematics_base/kinematics_base.h:591:33:[m[K [01;36m[Knote: [m[Kdeclared here
+   MOVEIT_DEPRECATED std::string [01;36m[Ktip_frame_[m[K;
+                                 [01;36m[K^~~~~~~~~~[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:253:98:[m[K [01;35m[Kwarning: [m[K‘[01m[Kkinematics::KinematicsBase::tip_frame_[m[K’ is deprecated [[01;35m[K-Wdeprecated-declarations[m[K]
+   boost::shared_ptr<urdf::Link> link = boost::const_pointer_cast<urdf::Link>(robot_model.getLink([01;35m[Ktip_frame_[m[K));
+                                                                                                  [01;35m[K^~~~~~~~~~[m[K
+In file included from [01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:49:0[m[K:
+[01m[K/opt/ros/melodic/include/moveit/kinematics_base/kinematics_base.h:591:33:[m[K [01;36m[Knote: [m[Kdeclared here
+   MOVEIT_DEPRECATED std::string [01;36m[Ktip_frame_[m[K;
+                                 [01;36m[K^~~~~~~~~~[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:253:109:[m[K [01;31m[Kerror: [m[Kno matching function for call to ‘[01m[Kconst_pointer_cast<urdf::Link>(urdf::LinkConstSharedPtr)[m[K’
+   boost::shared_ptr<urdf::Link> link = boost::const_pointer_cast<urdf::Link>(robot_model.getLink(tip_frame_)[01;31m[K)[m[K;
+                                                                                                             [01;31m[K^[m[K
+In file included from [01m[K/usr/include/boost/shared_ptr.hpp:17:0[m[K,
+                 from [01m[K/opt/ros/melodic/include/ros/forwards.h:37[m[K,
+                 from [01m[K/opt/ros/melodic/include/ros/common.h:37[m[K,
+                 from [01m[K/opt/ros/melodic/include/ros/ros.h:43[m[K,
+                 from [01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:48[m[K:
+[01m[K/usr/include/boost/smart_ptr/shared_ptr.hpp:888:42:[m[K [01;36m[Knote: [m[Kcandidate: template<class T, class U> boost::shared_ptr<X> boost::const_pointer_cast(const boost::shared_ptr<U>&)
+ template<class T, class U> shared_ptr<T> [01;36m[Kconst_pointer_cast[m[K( shared_ptr<U> const & r ) BOOST_SP_NOEXCEPT
+                                          [01;36m[K^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/usr/include/boost/smart_ptr/shared_ptr.hpp:888:42:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:253:109:[m[K [01;36m[Knote: [m[K  ‘[01m[Kurdf::LinkConstSharedPtr {aka std::shared_ptr<const urdf::Link>}[m[K’ is not derived from ‘[01m[Kconst boost::shared_ptr<U>[m[K’
+   boost::shared_ptr<urdf::Link> link = boost::const_pointer_cast<urdf::Link>(robot_model.getLink(tip_frame_)[01;36m[K)[m[K;
+                                                                                                             [01;36m[K^[m[K
+In file included from [01m[K/usr/include/boost/shared_ptr.hpp:17:0[m[K,
+                 from [01m[K/opt/ros/melodic/include/ros/forwards.h:37[m[K,
+                 from [01m[K/opt/ros/melodic/include/ros/common.h:37[m[K,
+                 from [01m[K/opt/ros/melodic/include/ros/ros.h:43[m[K,
+                 from [01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:48[m[K:
+[01m[K/usr/include/boost/smart_ptr/shared_ptr.hpp:930:42:[m[K [01;36m[Knote: [m[Kcandidate: template<class T, class U> boost::shared_ptr<X> boost::const_pointer_cast(boost::shared_ptr<U>&&)
+ template<class T, class U> shared_ptr<T> [01;36m[Kconst_pointer_cast[m[K( shared_ptr<U> && r ) BOOST_SP_NOEXCEPT
+                                          [01;36m[K^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/usr/include/boost/smart_ptr/shared_ptr.hpp:930:42:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:253:109:[m[K [01;36m[Knote: [m[K  ‘[01m[Kurdf::LinkConstSharedPtr {aka std::shared_ptr<const urdf::Link>}[m[K’ is not derived from ‘[01m[Kboost::shared_ptr<U>[m[K’
+   boost::shared_ptr<urdf::Link> link = boost::const_pointer_cast<urdf::Link>(robot_model.getLink(tip_frame_)[01;36m[K)[m[K;
+                                                                                                             [01;36m[K^[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:258:50:[m[K [01;31m[Kerror: [m[Kconversion from ‘[01m[Kurdf::JointSharedPtr {aka std::shared_ptr<urdf::Joint>}[m[K’ to non-scalar type ‘[01m[Kboost::shared_ptr<urdf::Joint>[m[K’ requested
+     boost::shared_ptr<urdf::Joint> joint = [01;31m[Klink->parent_joint[m[K;
+                                            [01;31m[K~~~~~~^~~~~~~~~~~~[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:303:28:[m[K [01;31m[Kerror: [m[Kno match for ‘[01m[Koperator=[m[K’ (operand types are ‘[01m[Kboost::shared_ptr<urdf::Link>[m[K’ and ‘[01m[Kurdf::LinkSharedPtr {aka std::shared_ptr<urdf::Link>}[m[K’)
+     link = link->getParent([01;31m[K)[m[K;
+                            [01;31m[K^[m[K
+In file included from [01m[K/usr/include/boost/shared_ptr.hpp:17:0[m[K,
+                 from [01m[K/opt/ros/melodic/include/ros/forwards.h:37[m[K,
+                 from [01m[K/opt/ros/melodic/include/ros/common.h:37[m[K,
+                 from [01m[K/opt/ros/melodic/include/ros/ros.h:43[m[K,
+                 from [01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:48[m[K:
+[01m[K/usr/include/boost/smart_ptr/shared_ptr.hpp:547:18:[m[K [01;36m[Knote: [m[Kcandidate: boost::shared_ptr<T>& boost::shared_ptr<T>::operator=(const boost::shared_ptr<T>&) [with T = urdf::Link]
+     shared_ptr & [01;36m[Koperator[m[K=( shared_ptr const & r ) BOOST_SP_NOEXCEPT
+                  [01;36m[K^~~~~~~~[m[K
+[01m[K/usr/include/boost/smart_ptr/shared_ptr.hpp:547:18:[m[K [01;36m[Knote: [m[K  no known conversion for argument 1 from ‘[01m[Kurdf::LinkSharedPtr {aka std::shared_ptr<urdf::Link>}[m[K’ to ‘[01m[Kconst boost::shared_ptr<urdf::Link>&[m[K’
+[01m[K/usr/include/boost/smart_ptr/shared_ptr.hpp:556:18:[m[K [01;36m[Knote: [m[Kcandidate: template<class Y> boost::shared_ptr<T>& boost::shared_ptr<T>::operator=(const boost::shared_ptr<Y>&) [with Y = Y; T = urdf::Link]
+     shared_ptr & [01;36m[Koperator[m[K=(shared_ptr<Y> const & r) BOOST_SP_NOEXCEPT
+                  [01;36m[K^~~~~~~~[m[K
+[01m[K/usr/include/boost/smart_ptr/shared_ptr.hpp:556:18:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:303:28:[m[K [01;36m[Knote: [m[K  ‘[01m[Kurdf::LinkSharedPtr {aka std::shared_ptr<urdf::Link>}[m[K’ is not derived from ‘[01m[Kconst boost::shared_ptr<X>[m[K’
+     link = link->getParent([01;36m[K)[m[K;
+                            [01;36m[K^[m[K
+In file included from [01m[K/usr/include/boost/shared_ptr.hpp:17:0[m[K,
+                 from [01m[K/opt/ros/melodic/include/ros/forwards.h:37[m[K,
+                 from [01m[K/opt/ros/melodic/include/ros/common.h:37[m[K,
+                 from [01m[K/opt/ros/melodic/include/ros/ros.h:43[m[K,
+                 from [01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:48[m[K:
+[01m[K/usr/include/boost/smart_ptr/shared_ptr.hpp:567:18:[m[K [01;36m[Knote: [m[Kcandidate: template<class Y> boost::shared_ptr<T>& boost::shared_ptr<T>::operator=(std::auto_ptr<_Up>&) [with Y = Y; T = urdf::Link]
+     shared_ptr & [01;36m[Koperator[m[K=( std::auto_ptr<Y> & r )
+                  [01;36m[K^~~~~~~~[m[K
+[01m[K/usr/include/boost/smart_ptr/shared_ptr.hpp:567:18:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:303:28:[m[K [01;36m[Knote: [m[K  ‘[01m[Kurdf::LinkSharedPtr {aka std::shared_ptr<urdf::Link>}[m[K’ is not derived from ‘[01m[Kstd::auto_ptr<Y>[m[K’
+     link = link->getParent([01;36m[K)[m[K;
+                            [01;36m[K^[m[K
+In file included from [01m[K/usr/include/boost/shared_ptr.hpp:17:0[m[K,
+                 from [01m[K/opt/ros/melodic/include/ros/forwards.h:37[m[K,
+                 from [01m[K/opt/ros/melodic/include/ros/common.h:37[m[K,
+                 from [01m[K/opt/ros/melodic/include/ros/ros.h:43[m[K,
+                 from [01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:48[m[K:
+[01m[K/usr/include/boost/smart_ptr/shared_ptr.hpp:576:18:[m[K [01;36m[Knote: [m[Kcandidate: template<class Y> boost::shared_ptr<T>& boost::shared_ptr<T>::operator=(std::auto_ptr<_Up>&&) [with Y = Y; T = urdf::Link]
+     shared_ptr & [01;36m[Koperator[m[K=( std::auto_ptr<Y> && r )
+                  [01;36m[K^~~~~~~~[m[K
+[01m[K/usr/include/boost/smart_ptr/shared_ptr.hpp:576:18:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:303:28:[m[K [01;36m[Knote: [m[K  ‘[01m[Kurdf::LinkSharedPtr {aka std::shared_ptr<urdf::Link>}[m[K’ is not derived from ‘[01m[Kstd::auto_ptr<Y>[m[K’
+     link = link->getParent([01;36m[K)[m[K;
+                            [01;36m[K^[m[K
+In file included from [01m[K/usr/include/boost/shared_ptr.hpp:17:0[m[K,
+                 from [01m[K/opt/ros/melodic/include/ros/forwards.h:37[m[K,
+                 from [01m[K/opt/ros/melodic/include/ros/common.h:37[m[K,
+                 from [01m[K/opt/ros/melodic/include/ros/ros.h:43[m[K,
+                 from [01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:48[m[K:
+[01m[K/usr/include/boost/smart_ptr/shared_ptr.hpp:598:18:[m[K [01;36m[Knote: [m[Kcandidate: template<class Y, class D> boost::shared_ptr<T>& boost::shared_ptr<T>::operator=(std::unique_ptr<_Up, _Ep>&&) [with Y = Y; D = D; T = urdf::Link]
+     shared_ptr & [01;36m[Koperator[m[K=( std::unique_ptr<Y, D> && r )
+                  [01;36m[K^~~~~~~~[m[K
+[01m[K/usr/include/boost/smart_ptr/shared_ptr.hpp:598:18:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:303:28:[m[K [01;36m[Knote: [m[K  ‘[01m[Kurdf::LinkSharedPtr {aka std::shared_ptr<urdf::Link>}[m[K’ is not derived from ‘[01m[Kstd::unique_ptr<_Tp, _Dp>[m[K’
+     link = link->getParent([01;36m[K)[m[K;
+                            [01;36m[K^[m[K
+In file included from [01m[K/usr/include/boost/shared_ptr.hpp:17:0[m[K,
+                 from [01m[K/opt/ros/melodic/include/ros/forwards.h:37[m[K,
+                 from [01m[K/opt/ros/melodic/include/ros/common.h:37[m[K,
+                 from [01m[K/opt/ros/melodic/include/ros/ros.h:43[m[K,
+                 from [01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:48[m[K:
+[01m[K/usr/include/boost/smart_ptr/shared_ptr.hpp:607:18:[m[K [01;36m[Knote: [m[Kcandidate: template<class Y, class D> boost::shared_ptr<T>& boost::shared_ptr<T>::operator=(boost::movelib::unique_ptr<Y, D>) [with Y = Y; D = D; T = urdf::Link]
+     shared_ptr & [01;36m[Koperator[m[K=( boost::movelib::unique_ptr<Y, D> r )
+                  [01;36m[K^~~~~~~~[m[K
+[01m[K/usr/include/boost/smart_ptr/shared_ptr.hpp:607:18:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:303:28:[m[K [01;36m[Knote: [m[K  ‘[01m[Kstd::shared_ptr<urdf::Link>[m[K’ is not derived from ‘[01m[Kboost::movelib::unique_ptr<Y, D>[m[K’
+     link = link->getParent([01;36m[K)[m[K;
+                            [01;36m[K^[m[K
+In file included from [01m[K/usr/include/boost/shared_ptr.hpp:17:0[m[K,
+                 from [01m[K/opt/ros/melodic/include/ros/forwards.h:37[m[K,
+                 from [01m[K/opt/ros/melodic/include/ros/common.h:37[m[K,
+                 from [01m[K/opt/ros/melodic/include/ros/ros.h:43[m[K,
+                 from [01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:48[m[K:
+[01m[K/usr/include/boost/smart_ptr/shared_ptr.hpp:658:18:[m[K [01;36m[Knote: [m[Kcandidate: boost::shared_ptr<T>& boost::shared_ptr<T>::operator=(boost::shared_ptr<T>&&) [with T = urdf::Link]
+     shared_ptr & [01;36m[Koperator[m[K=( shared_ptr && r ) BOOST_SP_NOEXCEPT
+                  [01;36m[K^~~~~~~~[m[K
+[01m[K/usr/include/boost/smart_ptr/shared_ptr.hpp:658:18:[m[K [01;36m[Knote: [m[K  no known conversion for argument 1 from ‘[01m[Kurdf::LinkSharedPtr {aka std::shared_ptr<urdf::Link>}[m[K’ to ‘[01m[Kboost::shared_ptr<urdf::Link>&&[m[K’
+[01m[K/usr/include/boost/smart_ptr/shared_ptr.hpp:665:18:[m[K [01;36m[Knote: [m[Kcandidate: template<class Y> boost::shared_ptr<T>& boost::shared_ptr<T>::operator=(boost::shared_ptr<Y>&&) [with Y = Y; T = urdf::Link]
+     shared_ptr & [01;36m[Koperator[m[K=( shared_ptr<Y> && r ) BOOST_SP_NOEXCEPT
+                  [01;36m[K^~~~~~~~[m[K
+[01m[K/usr/include/boost/smart_ptr/shared_ptr.hpp:665:18:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:303:28:[m[K [01;36m[Knote: [m[K  ‘[01m[Kurdf::LinkSharedPtr {aka std::shared_ptr<urdf::Link>}[m[K’ is not derived from ‘[01m[Kboost::shared_ptr<X>[m[K’
+     link = link->getParent([01;36m[K)[m[K;
+                            [01;36m[K^[m[K
+In file included from [01m[K/usr/include/boost/shared_ptr.hpp:17:0[m[K,
+                 from [01m[K/opt/ros/melodic/include/ros/forwards.h:37[m[K,
+                 from [01m[K/opt/ros/melodic/include/ros/common.h:37[m[K,
+                 from [01m[K/opt/ros/melodic/include/ros/ros.h:43[m[K,
+                 from [01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:48[m[K:
+[01m[K/usr/include/boost/smart_ptr/shared_ptr.hpp:683:18:[m[K [01;36m[Knote: [m[Kcandidate: boost::shared_ptr<T>& boost::shared_ptr<T>::operator=(boost::detail::sp_nullptr_t) [with T = urdf::Link; boost::detail::sp_nullptr_t = std::nullptr_t]
+     shared_ptr & [01;36m[Koperator[m[K=( boost::detail::sp_nullptr_t ) BOOST_SP_NOEXCEPT
+                  [01;36m[K^~~~~~~~[m[K
+[01m[K/usr/include/boost/smart_ptr/shared_ptr.hpp:683:18:[m[K [01;36m[Knote: [m[K  no known conversion for argument 1 from ‘[01m[Kurdf::LinkSharedPtr {aka std::shared_ptr<urdf::Link>}[m[K’ to ‘[01m[Kboost::detail::sp_nullptr_t {aka std::nullptr_t}[m[K’
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:[m[K In member function ‘[01m[Kvirtual bool ikfast_kinematics_plugin::IKFastKinematicsPlugin::getPositionFK(const std::vector<std::__cxx11::basic_string<char> >&, const std::vector<double>&, std::vector<geometry_msgs::Pose_<std::allocator<void> > >&) const[m[K’:
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:497:45:[m[K [01;35m[Kwarning: [m[K‘[01m[Kkinematics::KinematicsBase::tip_frame_[m[K’ is deprecated [[01;35m[K-Wdeprecated-declarations[m[K]
+   if(link_names.size()!=1 || link_names[0]!=[01;35m[Ktip_frame_[m[K){
+                                             [01;35m[K^~~~~~~~~~[m[K
+In file included from [01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:49:0[m[K:
+[01m[K/opt/ros/melodic/include/moveit/kinematics_base/kinematics_base.h:591:33:[m[K [01;36m[Knote: [m[Kdeclared here
+   MOVEIT_DEPRECATED std::string [01;36m[Ktip_frame_[m[K;
+                                 [01;36m[K^~~~~~~~~~[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:497:45:[m[K [01;35m[Kwarning: [m[K‘[01m[Kkinematics::KinematicsBase::tip_frame_[m[K’ is deprecated [[01;35m[K-Wdeprecated-declarations[m[K]
+   if(link_names.size()!=1 || link_names[0]!=[01;35m[Ktip_frame_[m[K){
+                                             [01;35m[K^~~~~~~~~~[m[K
+In file included from [01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:49:0[m[K:
+[01m[K/opt/ros/melodic/include/moveit/kinematics_base/kinematics_base.h:591:33:[m[K [01;36m[Knote: [m[Kdeclared here
+   MOVEIT_DEPRECATED std::string [01;36m[Ktip_frame_[m[K;
+                                 [01;36m[K^~~~~~~~~~[m[K
+In file included from [01m[K/opt/ros/melodic/include/ros/ros.h:40:0[m[K,
+                 from [01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:48[m[K:
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:498:59:[m[K [01;35m[Kwarning: [m[K‘[01m[Kkinematics::KinematicsBase::tip_frame_[m[K’ is deprecated [[01;35m[K-Wdeprecated-declarations[m[K]
+     ROS_ERROR_NAMED("ikfast","Can compute FK for %s only",[01;35m[Kt[m[Kip_frame_.c_str());
+                                                           [01;35m[K^[m[K
+[01m[K/opt/ros/melodic/include/ros/console.h:348:165:[m[K [01;36m[Knote: [m[Kin definition of macro ‘[01m[KROSCONSOLE_PRINT_AT_LOCATION_WITH_FILTER[m[K’
+     ::ros::console::print(filter, __rosconsole_define_location__loc.logger_, __rosconsole_define_location__loc.level_, __FILE__, __LINE__, __ROSCONSOLE_FUNCTION__, [01;36m[K__VA_ARGS__[m[K)
+                                                                                                                                                                     [01;36m[K^~~~~~~~~~~[m[K
+[01m[K/opt/ros/melodic/include/ros/console.h:387:7:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[KROSCONSOLE_PRINT_AT_LOCATION[m[K’
+       [01;36m[KROSCONSOLE_PRINT_AT_LOCATION[m[K(__VA_ARGS__); \
+       [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/opt/ros/melodic/include/ros/console.h:572:35:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[KROS_LOG_COND[m[K’
+ #define ROS_LOG(level, name, ...) [01;36m[KROS_LOG_COND[m[K(true, level, name, __VA_ARGS__)
+                                   [01;36m[K^~~~~~~~~~~~[m[K
+[01m[K/opt/ros/melodic/include/rosconsole/macros_generated.h:216:36:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[KROS_LOG[m[K’
+ #define ROS_ERROR_NAMED(name, ...) [01;36m[KROS_LOG[m[K(::ros::console::levels::Error, std::string(ROSCONSOLE_NAME_PREFIX) + "." + name, __VA_ARGS__)
+                                    [01;36m[K^~~~~~~[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:498:5:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[KROS_ERROR_NAMED[m[K’
+     [01;36m[KR[m[KOS_ERROR_NAMED("ikfast","Can compute FK for %s only",tip_frame_.c_str());
+     [01;36m[K^[m[K
+In file included from [01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:49:0[m[K:
+[01m[K/opt/ros/melodic/include/moveit/kinematics_base/kinematics_base.h:591:33:[m[K [01;36m[Knote: [m[Kdeclared here
+   MOVEIT_DEPRECATED std::string [01;36m[Ktip_frame_[m[K;
+                                 [01;36m[K^~~~~~~~~~[m[K
+In file included from [01m[K/opt/ros/melodic/include/ros/ros.h:40:0[m[K,
+                 from [01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:48[m[K:
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:498:59:[m[K [01;35m[Kwarning: [m[K‘[01m[Kkinematics::KinematicsBase::tip_frame_[m[K’ is deprecated [[01;35m[K-Wdeprecated-declarations[m[K]
+     ROS_ERROR_NAMED("ikfast","Can compute FK for %s only",[01;35m[Kt[m[Kip_frame_.c_str());
+                                                           [01;35m[K^[m[K
+[01m[K/opt/ros/melodic/include/ros/console.h:348:165:[m[K [01;36m[Knote: [m[Kin definition of macro ‘[01m[KROSCONSOLE_PRINT_AT_LOCATION_WITH_FILTER[m[K’
+     ::ros::console::print(filter, __rosconsole_define_location__loc.logger_, __rosconsole_define_location__loc.level_, __FILE__, __LINE__, __ROSCONSOLE_FUNCTION__, [01;36m[K__VA_ARGS__[m[K)
+                                                                                                                                                                     [01;36m[K^~~~~~~~~~~[m[K
+[01m[K/opt/ros/melodic/include/ros/console.h:387:7:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[KROSCONSOLE_PRINT_AT_LOCATION[m[K’
+       [01;36m[KROSCONSOLE_PRINT_AT_LOCATION[m[K(__VA_ARGS__); \
+       [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/opt/ros/melodic/include/ros/console.h:572:35:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[KROS_LOG_COND[m[K’
+ #define ROS_LOG(level, name, ...) [01;36m[KROS_LOG_COND[m[K(true, level, name, __VA_ARGS__)
+                                   [01;36m[K^~~~~~~~~~~~[m[K
+[01m[K/opt/ros/melodic/include/rosconsole/macros_generated.h:216:36:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[KROS_LOG[m[K’
+ #define ROS_ERROR_NAMED(name, ...) [01;36m[KROS_LOG[m[K(::ros::console::levels::Error, std::string(ROSCONSOLE_NAME_PREFIX) + "." + name, __VA_ARGS__)
+                                    [01;36m[K^~~~~~~[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:498:5:[m[K [01;36m[Knote: [m[Kin expansion of macro ‘[01m[KROS_ERROR_NAMED[m[K’
+     [01;36m[KR[m[KOS_ERROR_NAMED("ikfast","Can compute FK for %s only",tip_frame_.c_str());
+     [01;36m[K^[m[K
+In file included from [01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:49:0[m[K:
+[01m[K/opt/ros/melodic/include/moveit/kinematics_base/kinematics_base.h:591:33:[m[K [01;36m[Knote: [m[Kdeclared here
+   MOVEIT_DEPRECATED std::string [01;36m[Ktip_frame_[m[K;
+                                 [01;36m[K^~~~~~~~~~[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:[m[K In member function ‘[01m[Kvirtual bool ikfast_kinematics_plugin::IKFastKinematicsPlugin::searchPositionIK(const Pose&, const std::vector<double>&, double, const std::vector<double>&, std::vector<double>&, const IKCallbackFn&, moveit_msgs::MoveItErrorCodes&, const kinematics::KinematicsQueryOptions&) const[m[K’:
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:677:63:[m[K [01;35m[Kwarning: [m[K‘[01m[Kkinematics::KinematicsBase::search_discretization_[m[K’ is deprecated [[01;35m[K-Wdeprecated-declarations[m[K]
+     num_positive_increments = (int)((max_limit-initial_guess)/[01;35m[Ksearch_discretization_[m[K);
+                                                               [01;35m[K^~~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:49:0[m[K:
+[01m[K/opt/ros/melodic/include/moveit/kinematics_base/kinematics_base.h:592:28:[m[K [01;36m[Knote: [m[Kdeclared here
+   MOVEIT_DEPRECATED double [01;36m[Ksearch_discretization_[m[K;
+                            [01;36m[K^~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:677:63:[m[K [01;35m[Kwarning: [m[K‘[01m[Kkinematics::KinematicsBase::search_discretization_[m[K’ is deprecated [[01;35m[K-Wdeprecated-declarations[m[K]
+     num_positive_increments = (int)((max_limit-initial_guess)/[01;35m[Ksearch_discretization_[m[K);
+                                                               [01;35m[K^~~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:49:0[m[K:
+[01m[K/opt/ros/melodic/include/moveit/kinematics_base/kinematics_base.h:592:28:[m[K [01;36m[Knote: [m[Kdeclared here
+   MOVEIT_DEPRECATED double [01;36m[Ksearch_discretization_[m[K;
+                            [01;36m[K^~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:678:63:[m[K [01;35m[Kwarning: [m[K‘[01m[Kkinematics::KinematicsBase::search_discretization_[m[K’ is deprecated [[01;35m[K-Wdeprecated-declarations[m[K]
+     num_negative_increments = (int)((initial_guess-min_limit)/[01;35m[Ksearch_discretization_[m[K);
+                                                               [01;35m[K^~~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:49:0[m[K:
+[01m[K/opt/ros/melodic/include/moveit/kinematics_base/kinematics_base.h:592:28:[m[K [01;36m[Knote: [m[Kdeclared here
+   MOVEIT_DEPRECATED double [01;36m[Ksearch_discretization_[m[K;
+                            [01;36m[K^~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:678:63:[m[K [01;35m[Kwarning: [m[K‘[01m[Kkinematics::KinematicsBase::search_discretization_[m[K’ is deprecated [[01;35m[K-Wdeprecated-declarations[m[K]
+     num_negative_increments = (int)((initial_guess-min_limit)/[01;35m[Ksearch_discretization_[m[K);
+                                                               [01;35m[K^~~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:49:0[m[K:
+[01m[K/opt/ros/melodic/include/moveit/kinematics_base/kinematics_base.h:592:28:[m[K [01;36m[Knote: [m[Kdeclared here
+   MOVEIT_DEPRECATED double [01;36m[Ksearch_discretization_[m[K;
+                            [01;36m[K^~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:682:82:[m[K [01;35m[Kwarning: [m[K‘[01m[Kkinematics::KinematicsBase::search_discretization_[m[K’ is deprecated [[01;35m[K-Wdeprecated-declarations[m[K]
+     num_positive_increments = (joint_max_vector_[free_params_[0]]-initial_guess)/[01;35m[Ksearch_discretization_[m[K;
+                                                                                  [01;35m[K^~~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:49:0[m[K:
+[01m[K/opt/ros/melodic/include/moveit/kinematics_base/kinematics_base.h:592:28:[m[K [01;36m[Knote: [m[Kdeclared here
+   MOVEIT_DEPRECATED double [01;36m[Ksearch_discretization_[m[K;
+                            [01;36m[K^~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:682:82:[m[K [01;35m[Kwarning: [m[K‘[01m[Kkinematics::KinematicsBase::search_discretization_[m[K’ is deprecated [[01;35m[K-Wdeprecated-declarations[m[K]
+     num_positive_increments = (joint_max_vector_[free_params_[0]]-initial_guess)/[01;35m[Ksearch_discretization_[m[K;
+                                                                                  [01;35m[K^~~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:49:0[m[K:
+[01m[K/opt/ros/melodic/include/moveit/kinematics_base/kinematics_base.h:592:28:[m[K [01;36m[Knote: [m[Kdeclared here
+   MOVEIT_DEPRECATED double [01;36m[Ksearch_discretization_[m[K;
+                            [01;36m[K^~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:683:82:[m[K [01;35m[Kwarning: [m[K‘[01m[Kkinematics::KinematicsBase::search_discretization_[m[K’ is deprecated [[01;35m[K-Wdeprecated-declarations[m[K]
+     num_negative_increments = (initial_guess-joint_min_vector_[free_params_[0]])/[01;35m[Ksearch_discretization_[m[K;
+                                                                                  [01;35m[K^~~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:49:0[m[K:
+[01m[K/opt/ros/melodic/include/moveit/kinematics_base/kinematics_base.h:592:28:[m[K [01;36m[Knote: [m[Kdeclared here
+   MOVEIT_DEPRECATED double [01;36m[Ksearch_discretization_[m[K;
+                            [01;36m[K^~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:683:82:[m[K [01;35m[Kwarning: [m[K‘[01m[Kkinematics::KinematicsBase::search_discretization_[m[K’ is deprecated [[01;35m[K-Wdeprecated-declarations[m[K]
+     num_negative_increments = (initial_guess-joint_min_vector_[free_params_[0]])/[01;35m[Ksearch_discretization_[m[K;
+                                                                                  [01;35m[K^~~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:49:0[m[K:
+[01m[K/opt/ros/melodic/include/moveit/kinematics_base/kinematics_base.h:592:28:[m[K [01;36m[Knote: [m[Kdeclared here
+   MOVEIT_DEPRECATED double [01;36m[Ksearch_discretization_[m[K;
+                            [01;36m[K^~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:745:30:[m[K [01;35m[Kwarning: [m[K‘[01m[Kkinematics::KinematicsBase::search_discretization_[m[K’ is deprecated [[01;35m[K-Wdeprecated-declarations[m[K]
+     vfree[0] = initial_guess+[01;35m[Ksearch_discretization_[m[K*counter;
+                              [01;35m[K^~~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:49:0[m[K:
+[01m[K/opt/ros/melodic/include/moveit/kinematics_base/kinematics_base.h:592:28:[m[K [01;36m[Knote: [m[Kdeclared here
+   MOVEIT_DEPRECATED double [01;36m[Ksearch_discretization_[m[K;
+                            [01;36m[K^~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:745:30:[m[K [01;35m[Kwarning: [m[K‘[01m[Kkinematics::KinematicsBase::search_discretization_[m[K’ is deprecated [[01;35m[K-Wdeprecated-declarations[m[K]
+     vfree[0] = initial_guess+[01;35m[Ksearch_discretization_[m[K*counter;
+                              [01;35m[K^~~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:49:0[m[K:
+[01m[K/opt/ros/melodic/include/moveit/kinematics_base/kinematics_base.h:592:28:[m[K [01;36m[Knote: [m[Kdeclared here
+   MOVEIT_DEPRECATED double [01;36m[Ksearch_discretization_[m[K;
+                            [01;36m[K^~~~~~~~~~~~~~~~~~~~~~[m[K
+make[2]: *** [CMakeFiles/phantomx_pincher_arm_moveit_ikfast_kinematics_plugin.dir/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp.o] Error 1
+make[1]: *** [CMakeFiles/phantomx_pincher_arm_moveit_ikfast_kinematics_plugin.dir/all] Error 2
+make: *** [all] Error 2

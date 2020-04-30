@@ -1,0 +1,5 @@
+phantomx_arm/phantomx_arm_bringup
+/home/trashfleet/Documents/SwarmUnitROS/devel/.private/phantomx_arm_bringup/cmake.lock /home/trashfleet/Documents/SwarmUnitROS/devel/./cmake.lock
+/home/trashfleet/Documents/SwarmUnitROS/devel/.private/phantomx_arm_bringup/share/phantomx_arm_bringup/cmake/phantomx_arm_bringupConfig.cmake /home/trashfleet/Documents/SwarmUnitROS/devel/share/phantomx_arm_bringup/cmake/phantomx_arm_bringupConfig.cmake
+/home/trashfleet/Documents/SwarmUnitROS/devel/.private/phantomx_arm_bringup/share/phantomx_arm_bringup/cmake/phantomx_arm_bringupConfig-version.cmake /home/trashfleet/Documents/SwarmUnitROS/devel/share/phantomx_arm_bringup/cmake/phantomx_arm_bringupConfig-version.cmake
+/home/trashfleet/Documents/SwarmUnitROS/devel/.private/phantomx_arm_bringup/lib/pkgconfig/phantomx_arm_bringup.pc /home/trashfleet/Documents/SwarmUnitROS/devel/lib/pkgconfig/phantomx_arm_bringup.pc

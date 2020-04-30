@@ -1,6 +1,0 @@
- 
-<launch>
-    <node name="joy" pkg="joy" type="joy_node" required="true">
-        <param name="dev" type="str" value="/dev/input/by-id/usb-Microsoft_Controller_7EED8EFC5A79-joystick" />
-    </node>
-</launch>

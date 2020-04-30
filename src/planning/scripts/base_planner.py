@@ -2,9 +2,11 @@
 import rospy
 import sys
 import time
+import tf
 
 import numpy as np
 
+from pure_pursuit import PurePursuit
 from std_msgs.msg import Float32, Bool
 from geometry_msgs.msg import Pose
 
@@ -13,15 +15,16 @@ from tf.transformations import euler_from_quaternion, quaternion_from_euler
 class BasePlanner(object):
     def __init__(self):
         # get parameters
-        self.ang_vel_max = rospy.get_param('~ang_vel_max', 2.5)
-        self.ang_acc = rospy.get_param('~ang_acc', 2)
-        self.lin_vel_max = rospy.get_param('~lin_vel_max', 0.4)
-        self.lin_acc = rospy.get_param('~lin_acc', 0.4)
+        self.ang_vel_max = rospy.get_param('~ang_vel_max', 0.5)
+        self.ang_acc = rospy.get_param('~ang_acc', 0.5)
+        self.lin_vel_max = rospy.get_param('~lin_vel_max', 0.2)
+        self.lin_acc = rospy.get_param('~lin_acc', 0.2)
 
         # initialize attributes
         self.state = [0, 0, 0]
         self.target = [0, 0, 0]
         self.L = 0.4064
+        self.dt = 0.05
 
         # initialize node
         rospy.init_node('base_planner', anonymous=True)
@@ -33,6 +36,9 @@ class BasePlanner(object):
         self.left_motor_vel_pub = rospy.Publisher('motor1/cmd/vel', Float32, queue_size=10)
         self.right_motor_vel_pub = rospy.Publisher('motor2/cmd/vel', Float32, queue_size=10)
 
+        # initialize tf listener
+        self.listener = tf.TransformListener()
+
         # start main loop
         rospy.spin()
 
@@ -40,20 +46,33 @@ class BasePlanner(object):
 
     def pose_callback(self, msg):
         # extract state information
-        self.state[0] = msg.position.x
-        self.state[1] = msg.position.y
+#        self.state[0] = msg.position.x
+#        self.state[1] = msg.position.y
+#
+#        quat = [0, 0, 0, 0]
+#        quat[0] = msg.orientation.x
+#        quat[1] = msg.orientation.y
+#        quat[2] = msg.orientation.z
+#        quat[3] = msg.orientation.w
+#
+#        (_, _, yaw) = euler_from_quaternion(quat)
+#        self.state[2] = yaw
 
-        quat = [0, 0, 0, 0]
-        quat[0] = msg.orientation.x
-        quat[1] = msg.orientation.y
-        quat[2] = msg.orientation.z
-        quat[3] = msg.orientation.w
+	# get transform information
+        try:
+            (trans,rot) = self.listener.lookupTransform('/odom', '/base_link', rospy.Time(0))
 
-        (_, _, yaw) = euler_from_quaternion(quat)
-        self.state[2] = yaw
+            self.state[0] = trans[0]
+            self.state[1] = trans[1]
+
+            (_,_,yaw) = euler_from_quaternion(rot)
+            self.state[2] = yaw
+            print(self.state)
+        except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
+            pass
 
     def target_pose_callback(self, msg):
-        # extract target information        
+        # extract target information
         self.target[0] = msg.position.x
         self.target[1] = msg.position.y
 
@@ -69,52 +88,82 @@ class BasePlanner(object):
         # do pre-rotation
         point_ang = np.arctan2(self.target[1] - self.state[1], self.target[0] - self.state[0])
         ang = point_ang - self.state[2]
-        rospy.loginfo("rotate %f radians\n" %(ang))
-        self.rotate(ang, 0.05)
+
+        reverse = abs(ang) > np.pi / 2
+
+        if reverse:
+            point_ang += np.pi
+            point_ang = np.arctan2(np.sin(point_ang), np.cos(point_ang))
+            ang = point_ang - self.state[2]
+
+        rospy.loginfo("pre-rotate %f radians" %(ang))
+        self.rotate(point_ang)
 
         # move in straight line
         dist = np.sqrt((self.state[1] - self.target[1])**2 + (self.state[0] - self.target[0])**2)
-        rospy.loginfo("move straight %f m\n" %(dist))
-        self.move_straight(dist, 0.05)
-        
+        rospy.loginfo("move straight %f m" %(dist))
+        self.move_straight(self.state[:2], self.target[:2], reverse)
+
         # do post-rotation
         ang = self.target[2] - self.state[2]
-        rospy.loginfo("rotate %f radians\n" %(ang))
-        self.rotate(ang, 0.05)
+        rospy.loginfo("post-rotate %f radians" %(ang))
+        self.rotate(self.target[2])
 
         # send done message
+        rospy.loginfo("trajectory done")
+        self.send_vels(0,0)
         self.done_pub.publish(True)
 
     # HELPER FUNCTIONS
 
-    def rotate(self, ang, dt):
-        w_traj = self.trapezoidal_trajectory(ang, self.ang_vel_max, self.ang_acc, dt)
-        
-        counter = 0
+    def rotate(self, target_ang):
+        print("target: %f" %(target_ang))
+        ang_thresh = 0.01
+        ang_diff = target_ang - self.state[2]
+        k = 2
+
         timer = time.time()
 
-        while counter < len(w_traj):
-            if (time.time() - timer) > dt:
+        while abs(ang_diff) > ang_thresh:
+            if (time.time() - timer) > self.dt:
+#                print("ang diff: %f" %(ang_diff))
                 timer = time.time()
-                v = 0
-                w = w_traj[counter][1]
-                self.send_vels(v, w)
-                counter = counter + 1
+                ang_diff = target_ang - self.state[2]
 
-    def move_straight(self, dist, dt):
-        v_traj = self.trapezoidal_trajectory(dist, self.lin_vel_max, self.lin_acc, dt)
-        
-        counter = 0
+                w = min(self.ang_vel_max, abs(ang_diff) * k)
+
+                if ang_diff > 0:
+                    self.send_vels(0, w)
+                else:
+                    self.send_vels(0, -w)
+
+        self.send_vels(0, 0)
+
+    def move_straight(self, start, end, reverse):
+        dist_thresh = 0.01
+        dist = np.sqrt((start[1] - end[1])**2 + (start[0] - end[0])**2)
+        k = 2
+
+        timeout = 10
+
+        pp = PurePursuit(start, end)
+        start_time = time.time()
         timer = time.time()
 
-        while counter < len(v_traj):
-            if (time.time() - timer) > dt:
+        while (abs(dist) > dist_thresh) and (time.time() - start_time < timeout):
+            if (time.time() - timer) > self.dt:
                 timer = time.time()
-                v = v_traj[counter][1]
-                w = 0
+                dist = np.sqrt((self.state[1] - end[1])**2 + (self.state[0] - end[0])**2)
+
+                v = min(self.lin_vel_max, dist * k)
+
+                if reverse:
+                    v = v * -1
+
+                w = pp.get_ang_vel(self.state, v)
                 self.send_vels(v, w)
-                counter = counter + 1
-        pass
+
+        self.send_vels(0, 0)
 
     def trapezoidal_trajectory(self, d, max_vel, accel, dt):
         t_ramp = max_vel / accel
