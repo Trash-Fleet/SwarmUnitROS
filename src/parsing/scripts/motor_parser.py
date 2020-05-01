@@ -19,13 +19,23 @@ class MotorParserNode(object):
         self.ser.port = SERIAL_PORT
         self.ser.open()
 
+        # send default pid values
+        self.ser.write(b"P%f,I%f,D%f\n" %(4000, 10, 0))
+        self.ser.write(b"p%f,i%f,d%f\n" %(4000, 10, 0))
+
         self.motor1_vel_pub = rospy.Publisher('motor1/fb/vel', Float32, queue_size=10)
         self.motor1_enc_pub = rospy.Publisher('motor1/fb/enc', Int32, queue_size=10)
         rospy.Subscriber("motor1/cmd/vel", Float32, self.motor1_vel_callback)
+        rospy.Subscriber("motor1/cmd/p", Float32, self.motor1_p_callback)
+        rospy.Subscriber("motor1/cmd/i", Float32, self.motor1_i_callback)
+        rospy.Subscriber("motor1/cmd/d", Float32, self.motor1_d_callback)
 
         self.motor2_vel_pub = rospy.Publisher('motor2/fb/vel', Float32, queue_size=10)
         self.motor2_enc_pub = rospy.Publisher('motor2/fb/enc', Int32, queue_size=10)
         rospy.Subscriber("motor2/cmd/vel", Float32, self.motor2_vel_callback)
+        rospy.Subscriber("motor2/cmd/p", Float32, self.motor2_p_callback)
+        rospy.Subscriber("motor2/cmd/i", Float32, self.motor2_i_callback)
+        rospy.Subscriber("motor2/cmd/d", Float32, self.motor2_d_callback)
 
         self.imu_pub = rospy.Publisher('imu', Imu, queue_size=10)
 
@@ -55,10 +65,32 @@ class MotorParserNode(object):
             rate.sleep()
 
     def motor1_vel_callback(self, msg):
-        self.motor1_vel = msg.data
+        if msg.data == 0:
+            self.motor1_vel = 0
+        else:
+            # scale motor 1 by linear offset
+            self.motor1_vel = 0.12 + (msg.data - 0.1) * 1.1
+
+    def motor1_p_callback(self, msg):
+        self.ser.write(b'P%f\n' %(msg.data))
+
+    def motor1_i_callback(self, msg):
+        self.ser.write(b'I%f\n' %(msg.data))
+
+    def motor1_d_callback(self, msg):
+        self.ser.write(b'D%f\n' %(msg.data))
 
     def motor2_vel_callback(self, msg):
         self.motor2_vel = msg.data
+
+    def motor2_p_callback(self, msg):
+        self.ser.write(b'p%f\n' %(msg.data))
+
+    def motor2_i_callback(self, msg):
+        self.ser.write(b'i%f\n' %(msg.data))
+
+    def motor2_d_callback(self, msg):
+        self.ser.write(b'd%f\n' %(msg.data))
 
     def parse_message(self, msg):
         vals = msg.strip().split(',')
