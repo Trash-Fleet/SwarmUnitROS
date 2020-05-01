@@ -67,7 +67,7 @@ def main():
 
     pose_pub = rospy.Publisher("base/pose", Pose, queue_size=10)
 
-    rate = rospy.Rate(20) # 10hz
+    rate = rospy.Rate(10) # 10hz
 
     while not rospy.is_shutdown():
         if right_enc == None or left_enc == None:
