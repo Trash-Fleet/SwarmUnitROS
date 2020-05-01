@@ -17,8 +17,9 @@ class BasePlanner(object):
         # get parameters
         self.ang_vel_max = rospy.get_param('~ang_vel_max', 0.5)
         self.ang_acc = rospy.get_param('~ang_acc', 0.5)
-        self.lin_vel_max = rospy.get_param('~lin_vel_max', 0.2)
+        self.lin_vel_max = rospy.get_param('~lin_vel_max', 0.1)
         self.lin_acc = rospy.get_param('~lin_acc', 0.2)
+        self.vel_max = 0.2
 
         # initialize attributes
         self.state = [0, 0, 0]
@@ -67,7 +68,7 @@ class BasePlanner(object):
 
             (_,_,yaw) = euler_from_quaternion(rot)
             self.state[2] = yaw
-            print(self.state)
+#            print(self.state)
         except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
             pass
 
@@ -89,12 +90,14 @@ class BasePlanner(object):
         point_ang = np.arctan2(self.target[1] - self.state[1], self.target[0] - self.state[0])
         ang = point_ang - self.state[2]
 
-        reverse = abs(ang) > np.pi / 2
+        reverse = False
 
-        if reverse:
-            point_ang += np.pi
-            point_ang = np.arctan2(np.sin(point_ang), np.cos(point_ang))
-            ang = point_ang - self.state[2]
+#        reverse = abs(ang) > np.pi / 2
+
+#        if reverse:
+#            point_ang += np.pi
+#            point_ang = np.arctan2(np.sin(point_ang), np.cos(point_ang))
+#            ang = point_ang - self.state[2]
 
         rospy.loginfo("pre-rotate %f radians" %(ang))
         self.rotate(point_ang)
@@ -118,17 +121,24 @@ class BasePlanner(object):
 
     def rotate(self, target_ang):
         print("target: %f" %(target_ang))
-        ang_thresh = 0.01
+        ang_thresh = 0.03
+
         ang_diff = target_ang - self.state[2]
+        ang_diff = np.arctan2(np.sin(ang_diff), np.cos(ang_diff))
+
         k = 2
 
+	timeout = 10
+	start_time = time.time()
         timer = time.time()
 
-        while abs(ang_diff) > ang_thresh:
+        while (abs(ang_diff) > ang_thresh) and (time.time() - start_time < timeout):
             if (time.time() - timer) > self.dt:
 #                print("ang diff: %f" %(ang_diff))
                 timer = time.time()
+
                 ang_diff = target_ang - self.state[2]
+                ang_diff = np.arctan2(np.sin(ang_diff), np.cos(ang_diff))
 
                 w = min(self.ang_vel_max, abs(ang_diff) * k)
 
@@ -140,7 +150,7 @@ class BasePlanner(object):
         self.send_vels(0, 0)
 
     def move_straight(self, start, end, reverse):
-        dist_thresh = 0.01
+        dist_thresh = 0.03
         dist = np.sqrt((start[1] - end[1])**2 + (start[0] - end[0])**2)
         k = 2
 
@@ -214,6 +224,12 @@ class BasePlanner(object):
     def send_vels(self, v, w):
         vl = (2.0 * v - self.L * w) / 2.0
         vr = (2.0 * v + self.L * w) / 2.0
+
+        local_max = max([vl, vr])
+
+        if local_max != 0 and local_max > self.vel_max:
+            vl = (self.vel_max / local_max) * vl
+            vr = (self.vel_max / local_max) * vr
         
         self.left_motor_vel_pub.publish(vl)
         self.right_motor_vel_pub.publish(vr)
