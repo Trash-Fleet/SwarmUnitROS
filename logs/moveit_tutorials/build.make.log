@@ -1,13 +1,183 @@
-[  7%] Built target planning_scene_tutorial
-[ 14%] Built target ros_api_tutorial
-[ 21%] Built target robot_model_and_robot_state_tutorial
-[ 28%] Built target planning_scene_ros_api_tutorial
-[ 35%] Built target motion_planning_api_tutorial
-[ 42%] Built target motion_planning_pipeline_tutorial
-[ 50%] Built target move_group_interface_tutorial
-[ 64%] Built target interactivity_utils
-[ 71%] Built target state_display_tutorial
-[ 78%] Built target pick_place_tutorial
-[ 85%] Built target cylinder_segment
-[ 92%] Built target bag_publisher_maintain_time
-[100%] Built target visualizing_collisions_tutorial
+[  4%] Built target ros_api_tutorial
+[  9%] Built target robot_model_and_robot_state_tutorial
+[ 11%] [32mBuilding CXX object doc/planning_scene_ros_api/CMakeFiles/planning_scene_ros_api_tutorial.dir/src/planning_scene_ros_api_tutorial.cpp.o[0m
+[ 15%] Built target planning_scene_tutorial
+[ 18%] [32mBuilding CXX object doc/motion_planning_api/CMakeFiles/motion_planning_api_tutorial.dir/src/motion_planning_api_tutorial.cpp.o[0m
+[ 20%] [32mBuilding CXX object doc/motion_planning_pipeline/CMakeFiles/motion_planning_pipeline_tutorial.dir/src/motion_planning_pipeline_tutorial.cpp.o[0m
+[ 22%] [32mBuilding CXX object doc/interactivity/CMakeFiles/interactivity_utils.dir/src/interactive_robot.cpp.o[0m
+[ 25%] [32mBuilding CXX object doc/interactivity/CMakeFiles/interactivity_utils.dir/src/imarker.cpp.o[0m
+[ 27%] [32m[1mLinking CXX executable /home/trashfleet/Documents/SwarmUnitROS/devel/.private/moveit_tutorials/lib/moveit_tutorials/planning_scene_ros_api_tutorial[0m
+[ 27%] Built target planning_scene_ros_api_tutorial
+[ 29%] [32mBuilding CXX object doc/interactivity/CMakeFiles/interactivity_utils.dir/src/pose_string.cpp.o[0m
+[ 31%] [32m[1mLinking CXX executable /home/trashfleet/Documents/SwarmUnitROS/devel/.private/moveit_tutorials/lib/moveit_tutorials/motion_planning_api_tutorial[0m
+[ 34%] [32m[1mLinking CXX executable /home/trashfleet/Documents/SwarmUnitROS/devel/.private/moveit_tutorials/lib/moveit_tutorials/motion_planning_pipeline_tutorial[0m
+[35m[1mScanning dependencies of target move_group_interface_tutorial[0m
+[ 36%] [32mBuilding CXX object doc/move_group_interface/CMakeFiles/move_group_interface_tutorial.dir/src/move_group_interface_tutorial.cpp.o[0m
+[ 36%] Built target motion_planning_api_tutorial
+[35m[1mScanning dependencies of target state_display_tutorial[0m
+[ 38%] [32mBuilding CXX object doc/state_display/CMakeFiles/state_display_tutorial.dir/src/state_display_tutorial.cpp.o[0m
+[ 38%] Built target motion_planning_pipeline_tutorial
+[35m[1mScanning dependencies of target pick_place_tutorial[0m
+[ 40%] [32mBuilding CXX object doc/pick_place/CMakeFiles/pick_place_tutorial.dir/src/pick_place_tutorial.cpp.o[0m
+[ 43%] [32m[1mLinking CXX shared library /home/trashfleet/Documents/SwarmUnitROS/devel/.private/moveit_tutorials/lib/libinteractivity_utils.so[0m
+[ 43%] Built target interactivity_utils
+[35m[1mScanning dependencies of target subframes_tutorial[0m
+[ 45%] [32mBuilding CXX object doc/subframes/CMakeFiles/subframes_tutorial.dir/src/subframes_tutorial.cpp.o[0m
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/moveit_tutorials/doc/move_group_interface/src/move_group_interface_tutorial.cpp:[m[K In function ‘[01m[Kint main(int, char**)[m[K’:
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/moveit_tutorials/doc/move_group_interface/src/move_group_interface_tutorial.cpp:299:32:[m[K [01;31m[Kerror: [m[Kno matching function for call to ‘[01m[Kmoveit::planning_interface::MoveGroupInterface::execute(moveit_msgs::RobotTrajectory&)[m[K’
+   move_group.execute(trajectory[01;31m[K)[m[K;
+                                [01;31m[K^[m[K
+In file included from [01m[K/home/trashfleet/Documents/SwarmUnitROS/src/moveit_tutorials/doc/move_group_interface/src/move_group_interface_tutorial.cpp:37:0[m[K:
+[01m[K/opt/ros/melodic/include/moveit/move_group_interface/move_group_interface.h:713:19:[m[K [01;36m[Knote: [m[Kcandidate: moveit::planning_interface::MoveItErrorCode moveit::planning_interface::MoveGroupInterface::execute(const moveit::planning_interface::MoveGroupInterface::Plan&)
+   MoveItErrorCode [01;36m[Kexecute[m[K(const Plan& plan);
+                   [01;36m[K^~~~~~~[m[K
+[01m[K/opt/ros/melodic/include/moveit/move_group_interface/move_group_interface.h:713:19:[m[K [01;36m[Knote: [m[K  no known conversion for argument 1 from ‘[01m[Kmoveit_msgs::RobotTrajectory {aka moveit_msgs::RobotTrajectory_<std::allocator<void> >}[m[K’ to ‘[01m[Kconst moveit::planning_interface::MoveGroupInterface::Plan&[m[K’
+[ 47%] [32m[1mLinking CXX executable /home/trashfleet/Documents/SwarmUnitROS/devel/.private/moveit_tutorials/lib/moveit_tutorials/state_display_tutorial[0m
+[ 47%] Built target state_display_tutorial
+[35m[1mScanning dependencies of target cylinder_segment[0m
+[ 50%] [32mBuilding CXX object doc/perception_pipeline/CMakeFiles/cylinder_segment.dir/src/cylinder_segment.cpp.o[0m
+doc/move_group_interface/CMakeFiles/move_group_interface_tutorial.dir/build.make:62: recipe for target 'doc/move_group_interface/CMakeFiles/move_group_interface_tutorial.dir/src/move_group_interface_tutorial.cpp.o' failed
+make[2]: *** [doc/move_group_interface/CMakeFiles/move_group_interface_tutorial.dir/src/move_group_interface_tutorial.cpp.o] Error 1
+make[1]: *** [doc/move_group_interface/CMakeFiles/move_group_interface_tutorial.dir/all] Error 2
+make[1]: *** Waiting for unfinished jobs....
+CMakeFiles/Makefile2:4545: recipe for target 'doc/move_group_interface/CMakeFiles/move_group_interface_tutorial.dir/all' failed
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/moveit_tutorials/doc/subframes/src/subframes_tutorial.cpp:[m[K In function ‘[01m[Kvoid spawnCollisionObjects(moveit::planning_interface::PlanningSceneInterface&)[m[K’:
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/moveit_tutorials/doc/subframes/src/subframes_tutorial.cpp:116:7:[m[K [01;31m[Kerror: [m[K‘[01m[Kmoveit_msgs::CollisionObject {aka struct moveit_msgs::CollisionObject_<std::allocator<void> >}[m[K’ has no member named ‘[01m[Ksubframe_names[m[K’
+   box.[01;31m[Ksubframe_names[m[K.resize(5);
+       [01;31m[K^~~~~~~~~~~~~~[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/moveit_tutorials/doc/subframes/src/subframes_tutorial.cpp:117:7:[m[K [01;31m[Kerror: [m[K‘[01m[Kmoveit_msgs::CollisionObject {aka struct moveit_msgs::CollisionObject_<std::allocator<void> >}[m[K’ has no member named ‘[01m[Ksubframe_poses[m[K’; did you mean ‘[01m[Kplane_poses[m[K’?
+   box.[01;31m[Ksubframe_poses[m[K.resize(5);
+       [01;31m[K^~~~~~~~~~~~~~[m[K
+       [32m[Kplane_poses[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/moveit_tutorials/doc/subframes/src/subframes_tutorial.cpp:119:7:[m[K [01;31m[Kerror: [m[K‘[01m[Kmoveit_msgs::CollisionObject {aka struct moveit_msgs::CollisionObject_<std::allocator<void> >}[m[K’ has no member named ‘[01m[Ksubframe_names[m[K’
+   box.[01;31m[Ksubframe_names[m[K[0] = "bottom";
+       [01;31m[K^~~~~~~~~~~~~~[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/moveit_tutorials/doc/subframes/src/subframes_tutorial.cpp:120:7:[m[K [01;31m[Kerror: [m[K‘[01m[Kmoveit_msgs::CollisionObject {aka struct moveit_msgs::CollisionObject_<std::allocator<void> >}[m[K’ has no member named ‘[01m[Ksubframe_poses[m[K’; did you mean ‘[01m[Kplane_poses[m[K’?
+   box.[01;31m[Ksubframe_poses[m[K[0].position.y = -.05;
+       [01;31m[K^~~~~~~~~~~~~~[m[K
+       [32m[Kplane_poses[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/moveit_tutorials/doc/subframes/src/subframes_tutorial.cpp:121:7:[m[K [01;31m[Kerror: [m[K‘[01m[Kmoveit_msgs::CollisionObject {aka struct moveit_msgs::CollisionObject_<std::allocator<void> >}[m[K’ has no member named ‘[01m[Ksubframe_poses[m[K’; did you mean ‘[01m[Kplane_poses[m[K’?
+   box.[01;31m[Ksubframe_poses[m[K[0].position.z = 0.0 + z_offset_box;
+       [01;31m[K^~~~~~~~~~~~~~[m[K
+       [32m[Kplane_poses[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/moveit_tutorials/doc/subframes/src/subframes_tutorial.cpp:125:7:[m[K [01;31m[Kerror: [m[K‘[01m[Kmoveit_msgs::CollisionObject {aka struct moveit_msgs::CollisionObject_<std::allocator<void> >}[m[K’ has no member named ‘[01m[Ksubframe_poses[m[K’; did you mean ‘[01m[Kplane_poses[m[K’?
+   box.[01;31m[Ksubframe_poses[m[K[0].orientation = tf2::toMsg(orientation);
+       [01;31m[K^~~~~~~~~~~~~~[m[K
+       [32m[Kplane_poses[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/moveit_tutorials/doc/subframes/src/subframes_tutorial.cpp:128:7:[m[K [01;31m[Kerror: [m[K‘[01m[Kmoveit_msgs::CollisionObject {aka struct moveit_msgs::CollisionObject_<std::allocator<void> >}[m[K’ has no member named ‘[01m[Ksubframe_names[m[K’
+   box.[01;31m[Ksubframe_names[m[K[1] = "top";
+       [01;31m[K^~~~~~~~~~~~~~[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/moveit_tutorials/doc/subframes/src/subframes_tutorial.cpp:129:7:[m[K [01;31m[Kerror: [m[K‘[01m[Kmoveit_msgs::CollisionObject {aka struct moveit_msgs::CollisionObject_<std::allocator<void> >}[m[K’ has no member named ‘[01m[Ksubframe_poses[m[K’; did you mean ‘[01m[Kplane_poses[m[K’?
+   box.[01;31m[Ksubframe_poses[m[K[1].position.y = .05;
+       [01;31m[K^~~~~~~~~~~~~~[m[K
+       [32m[Kplane_poses[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/moveit_tutorials/doc/subframes/src/subframes_tutorial.cpp:130:7:[m[K [01;31m[Kerror: [m[K‘[01m[Kmoveit_msgs::CollisionObject {aka struct moveit_msgs::CollisionObject_<std::allocator<void> >}[m[K’ has no member named ‘[01m[Ksubframe_poses[m[K’; did you mean ‘[01m[Kplane_poses[m[K’?
+   box.[01;31m[Ksubframe_poses[m[K[1].position.z = 0.0 + z_offset_box;
+       [01;31m[K^~~~~~~~~~~~~~[m[K
+       [32m[Kplane_poses[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/moveit_tutorials/doc/subframes/src/subframes_tutorial.cpp:132:7:[m[K [01;31m[Kerror: [m[K‘[01m[Kmoveit_msgs::CollisionObject {aka struct moveit_msgs::CollisionObject_<std::allocator<void> >}[m[K’ has no member named ‘[01m[Ksubframe_poses[m[K’; did you mean ‘[01m[Kplane_poses[m[K’?
+   box.[01;31m[Ksubframe_poses[m[K[1].orientation = tf2::toMsg(orientation);
+       [01;31m[K^~~~~~~~~~~~~~[m[K
+       [32m[Kplane_poses[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/moveit_tutorials/doc/subframes/src/subframes_tutorial.cpp:134:7:[m[K [01;31m[Kerror: [m[K‘[01m[Kmoveit_msgs::CollisionObject {aka struct moveit_msgs::CollisionObject_<std::allocator<void> >}[m[K’ has no member named ‘[01m[Ksubframe_names[m[K’
+   box.[01;31m[Ksubframe_names[m[K[2] = "corner_1";
+       [01;31m[K^~~~~~~~~~~~~~[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/moveit_tutorials/doc/subframes/src/subframes_tutorial.cpp:135:7:[m[K [01;31m[Kerror: [m[K‘[01m[Kmoveit_msgs::CollisionObject {aka struct moveit_msgs::CollisionObject_<std::allocator<void> >}[m[K’ has no member named ‘[01m[Ksubframe_poses[m[K’; did you mean ‘[01m[Kplane_poses[m[K’?
+   box.[01;31m[Ksubframe_poses[m[K[2].position.x = -.025;
+       [01;31m[K^~~~~~~~~~~~~~[m[K
+       [32m[Kplane_poses[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/moveit_tutorials/doc/subframes/src/subframes_tutorial.cpp:136:7:[m[K [01;31m[Kerror: [m[K‘[01m[Kmoveit_msgs::CollisionObject {aka struct moveit_msgs::CollisionObject_<std::allocator<void> >}[m[K’ has no member named ‘[01m[Ksubframe_poses[m[K’; did you mean ‘[01m[Kplane_poses[m[K’?
+   box.[01;31m[Ksubframe_poses[m[K[2].position.y = -.05;
+       [01;31m[K^~~~~~~~~~~~~~[m[K
+       [32m[Kplane_poses[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/moveit_tutorials/doc/subframes/src/subframes_tutorial.cpp:137:7:[m[K [01;31m[Kerror: [m[K‘[01m[Kmoveit_msgs::CollisionObject {aka struct moveit_msgs::CollisionObject_<std::allocator<void> >}[m[K’ has no member named ‘[01m[Ksubframe_poses[m[K’; did you mean ‘[01m[Kplane_poses[m[K’?
+   box.[01;31m[Ksubframe_poses[m[K[2].position.z = -.01 + z_offset_box;
+       [01;31m[K^~~~~~~~~~~~~~[m[K
+       [32m[Kplane_poses[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/moveit_tutorials/doc/subframes/src/subframes_tutorial.cpp:139:7:[m[K [01;31m[Kerror: [m[K‘[01m[Kmoveit_msgs::CollisionObject {aka struct moveit_msgs::CollisionObject_<std::allocator<void> >}[m[K’ has no member named ‘[01m[Ksubframe_poses[m[K’; did you mean ‘[01m[Kplane_poses[m[K’?
+   box.[01;31m[Ksubframe_poses[m[K[2].orientation = tf2::toMsg(orientation);
+       [01;31m[K^~~~~~~~~~~~~~[m[K
+       [32m[Kplane_poses[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/moveit_tutorials/doc/subframes/src/subframes_tutorial.cpp:141:7:[m[K [01;31m[Kerror: [m[K‘[01m[Kmoveit_msgs::CollisionObject {aka struct moveit_msgs::CollisionObject_<std::allocator<void> >}[m[K’ has no member named ‘[01m[Ksubframe_names[m[K’
+   box.[01;31m[Ksubframe_names[m[K[3] = "corner_2";
+       [01;31m[K^~~~~~~~~~~~~~[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/moveit_tutorials/doc/subframes/src/subframes_tutorial.cpp:142:7:[m[K [01;31m[Kerror: [m[K‘[01m[Kmoveit_msgs::CollisionObject {aka struct moveit_msgs::CollisionObject_<std::allocator<void> >}[m[K’ has no member named ‘[01m[Ksubframe_poses[m[K’; did you mean ‘[01m[Kplane_poses[m[K’?
+   box.[01;31m[Ksubframe_poses[m[K[3].position.x = .025;
+       [01;31m[K^~~~~~~~~~~~~~[m[K
+       [32m[Kplane_poses[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/moveit_tutorials/doc/subframes/src/subframes_tutorial.cpp:143:7:[m[K [01;31m[Kerror: [m[K‘[01m[Kmoveit_msgs::CollisionObject {aka struct moveit_msgs::CollisionObject_<std::allocator<void> >}[m[K’ has no member named ‘[01m[Ksubframe_poses[m[K’; did you mean ‘[01m[Kplane_poses[m[K’?
+   box.[01;31m[Ksubframe_poses[m[K[3].position.y = -.05;
+       [01;31m[K^~~~~~~~~~~~~~[m[K
+       [32m[Kplane_poses[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/moveit_tutorials/doc/subframes/src/subframes_tutorial.cpp:144:7:[m[K [01;31m[Kerror: [m[K‘[01m[Kmoveit_msgs::CollisionObject {aka struct moveit_msgs::CollisionObject_<std::allocator<void> >}[m[K’ has no member named ‘[01m[Ksubframe_poses[m[K’; did you mean ‘[01m[Kplane_poses[m[K’?
+   box.[01;31m[Ksubframe_poses[m[K[3].position.z = -.01 + z_offset_box;
+       [01;31m[K^~~~~~~~~~~~~~[m[K
+       [32m[Kplane_poses[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/moveit_tutorials/doc/subframes/src/subframes_tutorial.cpp:146:7:[m[K [01;31m[Kerror: [m[K‘[01m[Kmoveit_msgs::CollisionObject {aka struct moveit_msgs::CollisionObject_<std::allocator<void> >}[m[K’ has no member named ‘[01m[Ksubframe_poses[m[K’; did you mean ‘[01m[Kplane_poses[m[K’?
+   box.[01;31m[Ksubframe_poses[m[K[3].orientation = tf2::toMsg(orientation);
+       [01;31m[K^~~~~~~~~~~~~~[m[K
+       [32m[Kplane_poses[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/moveit_tutorials/doc/subframes/src/subframes_tutorial.cpp:148:7:[m[K [01;31m[Kerror: [m[K‘[01m[Kmoveit_msgs::CollisionObject {aka struct moveit_msgs::CollisionObject_<std::allocator<void> >}[m[K’ has no member named ‘[01m[Ksubframe_names[m[K’
+   box.[01;31m[Ksubframe_names[m[K[4] = "side";
+       [01;31m[K^~~~~~~~~~~~~~[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/moveit_tutorials/doc/subframes/src/subframes_tutorial.cpp:149:7:[m[K [01;31m[Kerror: [m[K‘[01m[Kmoveit_msgs::CollisionObject {aka struct moveit_msgs::CollisionObject_<std::allocator<void> >}[m[K’ has no member named ‘[01m[Ksubframe_poses[m[K’; did you mean ‘[01m[Kplane_poses[m[K’?
+   box.[01;31m[Ksubframe_poses[m[K[4].position.x = .0;
+       [01;31m[K^~~~~~~~~~~~~~[m[K
+       [32m[Kplane_poses[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/moveit_tutorials/doc/subframes/src/subframes_tutorial.cpp:150:7:[m[K [01;31m[Kerror: [m[K‘[01m[Kmoveit_msgs::CollisionObject {aka struct moveit_msgs::CollisionObject_<std::allocator<void> >}[m[K’ has no member named ‘[01m[Ksubframe_poses[m[K’; did you mean ‘[01m[Kplane_poses[m[K’?
+   box.[01;31m[Ksubframe_poses[m[K[4].position.y = .0;
+       [01;31m[K^~~~~~~~~~~~~~[m[K
+       [32m[Kplane_poses[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/moveit_tutorials/doc/subframes/src/subframes_tutorial.cpp:151:7:[m[K [01;31m[Kerror: [m[K‘[01m[Kmoveit_msgs::CollisionObject {aka struct moveit_msgs::CollisionObject_<std::allocator<void> >}[m[K’ has no member named ‘[01m[Ksubframe_poses[m[K’; did you mean ‘[01m[Kplane_poses[m[K’?
+   box.[01;31m[Ksubframe_poses[m[K[4].position.z = -.01 + z_offset_box;
+       [01;31m[K^~~~~~~~~~~~~~[m[K
+       [32m[Kplane_poses[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/moveit_tutorials/doc/subframes/src/subframes_tutorial.cpp:153:7:[m[K [01;31m[Kerror: [m[K‘[01m[Kmoveit_msgs::CollisionObject {aka struct moveit_msgs::CollisionObject_<std::allocator<void> >}[m[K’ has no member named ‘[01m[Ksubframe_poses[m[K’; did you mean ‘[01m[Kplane_poses[m[K’?
+   box.[01;31m[Ksubframe_poses[m[K[4].orientation = tf2::toMsg(orientation);
+       [01;31m[K^~~~~~~~~~~~~~[m[K
+       [32m[Kplane_poses[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/moveit_tutorials/doc/subframes/src/subframes_tutorial.cpp:171:12:[m[K [01;31m[Kerror: [m[K‘[01m[Kmoveit_msgs::CollisionObject {aka struct moveit_msgs::CollisionObject_<std::allocator<void> >}[m[K’ has no member named ‘[01m[Ksubframe_poses[m[K’; did you mean ‘[01m[Kplane_poses[m[K’?
+   cylinder.[01;31m[Ksubframe_poses[m[K.resize(1);
+            [01;31m[K^~~~~~~~~~~~~~[m[K
+            [32m[Kplane_poses[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/moveit_tutorials/doc/subframes/src/subframes_tutorial.cpp:172:12:[m[K [01;31m[Kerror: [m[K‘[01m[Kmoveit_msgs::CollisionObject {aka struct moveit_msgs::CollisionObject_<std::allocator<void> >}[m[K’ has no member named ‘[01m[Ksubframe_names[m[K’
+   cylinder.[01;31m[Ksubframe_names[m[K.resize(1);
+            [01;31m[K^~~~~~~~~~~~~~[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/moveit_tutorials/doc/subframes/src/subframes_tutorial.cpp:173:12:[m[K [01;31m[Kerror: [m[K‘[01m[Kmoveit_msgs::CollisionObject {aka struct moveit_msgs::CollisionObject_<std::allocator<void> >}[m[K’ has no member named ‘[01m[Ksubframe_names[m[K’
+   cylinder.[01;31m[Ksubframe_names[m[K[0] = "tip";
+            [01;31m[K^~~~~~~~~~~~~~[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/moveit_tutorials/doc/subframes/src/subframes_tutorial.cpp:174:12:[m[K [01;31m[Kerror: [m[K‘[01m[Kmoveit_msgs::CollisionObject {aka struct moveit_msgs::CollisionObject_<std::allocator<void> >}[m[K’ has no member named ‘[01m[Ksubframe_poses[m[K’; did you mean ‘[01m[Kplane_poses[m[K’?
+   cylinder.[01;31m[Ksubframe_poses[m[K[0].position.x = 0.03;
+            [01;31m[K^~~~~~~~~~~~~~[m[K
+            [32m[Kplane_poses[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/moveit_tutorials/doc/subframes/src/subframes_tutorial.cpp:175:12:[m[K [01;31m[Kerror: [m[K‘[01m[Kmoveit_msgs::CollisionObject {aka struct moveit_msgs::CollisionObject_<std::allocator<void> >}[m[K’ has no member named ‘[01m[Ksubframe_poses[m[K’; did you mean ‘[01m[Kplane_poses[m[K’?
+   cylinder.[01;31m[Ksubframe_poses[m[K[0].position.y = 0.0;
+            [01;31m[K^~~~~~~~~~~~~~[m[K
+            [32m[Kplane_poses[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/moveit_tutorials/doc/subframes/src/subframes_tutorial.cpp:176:12:[m[K [01;31m[Kerror: [m[K‘[01m[Kmoveit_msgs::CollisionObject {aka struct moveit_msgs::CollisionObject_<std::allocator<void> >}[m[K’ has no member named ‘[01m[Ksubframe_poses[m[K’; did you mean ‘[01m[Kplane_poses[m[K’?
+   cylinder.[01;31m[Ksubframe_poses[m[K[0].position.z = 0.0 + z_offset_cylinder;
+            [01;31m[K^~~~~~~~~~~~~~[m[K
+            [32m[Kplane_poses[m[K
+[01m[K/home/trashfleet/Documents/SwarmUnitROS/src/moveit_tutorials/doc/subframes/src/subframes_tutorial.cpp:178:12:[m[K [01;31m[Kerror: [m[K‘[01m[Kmoveit_msgs::CollisionObject {aka struct moveit_msgs::CollisionObject_<std::allocator<void> >}[m[K’ has no member named ‘[01m[Ksubframe_poses[m[K’; did you mean ‘[01m[Kplane_poses[m[K’?
+   cylinder.[01;31m[Ksubframe_poses[m[K[0].orientation = tf2::toMsg(orientation);
+            [01;31m[K^~~~~~~~~~~~~~[m[K
+            [32m[Kplane_poses[m[K
+[ 52%] [32m[1mLinking CXX executable /home/trashfleet/Documents/SwarmUnitROS/devel/.private/moveit_tutorials/lib/moveit_tutorials/pick_place_tutorial[0m
+[ 52%] Built target pick_place_tutorial
+doc/subframes/CMakeFiles/subframes_tutorial.dir/build.make:62: recipe for target 'doc/subframes/CMakeFiles/subframes_tutorial.dir/src/subframes_tutorial.cpp.o' failed
+make[2]: *** [doc/subframes/CMakeFiles/subframes_tutorial.dir/src/subframes_tutorial.cpp.o] Error 1
+CMakeFiles/Makefile2:4783: recipe for target 'doc/subframes/CMakeFiles/subframes_tutorial.dir/all' failed
+make[1]: *** [doc/subframes/CMakeFiles/subframes_tutorial.dir/all] Error 2
+In file included from [01m[K/usr/include/pcl-1.8/pcl/sample_consensus/sac_model.h:52:0[m[K,
+                 from [01m[K/usr/include/pcl-1.8/pcl/sample_consensus/sac.h:45[m[K,
+                 from [01m[K/usr/include/pcl-1.8/pcl/segmentation/sac_segmentation.h:49[m[K,
+                 from [01m[K/home/trashfleet/Documents/SwarmUnitROS/src/moveit_tutorials/doc/perception_pipeline/src/cylinder_segment.cpp:43[m[K:
+[01m[K/usr/include/pcl-1.8/pcl/sample_consensus/model_types.h:[m[K In function ‘[01m[Kvoid __static_initialization_and_destruction_0(int, int)[m[K’:
+[01m[K/usr/include/pcl-1.8/pcl/sample_consensus/model_types.h:99:3:[m[K [01;35m[Kwarning: [m[K‘[01m[Kpcl::SAC_SAMPLE_SIZE[m[K’ is deprecated: This map is deprecated and is kept only to prevent breaking existing user code. Starting from PCL 1.8.0 model sample size is a protected member of the SampleConsensusModel class [[01;35m[K-Wdeprecated-declarations[m[K]
+   [01;35m[KSAC_SAMPLE_SIZE[m[K (sample_size_pairs, sample_size_pairs + sizeof (sample_size_pairs) / sizeof (SampleSizeModel));
+   [01;35m[K^~~~~~~~~~~~~~~[m[K
+[01m[K/usr/include/pcl-1.8/pcl/sample_consensus/model_types.h:99:3:[m[K [01;36m[Knote: [m[Kdeclared here
+[ 54%] [32m[1mLinking CXX executable /home/trashfleet/Documents/SwarmUnitROS/devel/.private/moveit_tutorials/lib/moveit_tutorials/cylinder_segment[0m
+[ 54%] Built target cylinder_segment
+Makefile:140: recipe for target 'all' failed
+make: *** [all] Error 2

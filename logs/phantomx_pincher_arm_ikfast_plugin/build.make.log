@@ -1,4 +1,3 @@
-[35m[1mScanning dependencies of target phantomx_pincher_arm_moveit_ikfast_kinematics_plugin[0m
 [ 50%] [32mBuilding CXX object CMakeFiles/phantomx_pincher_arm_moveit_ikfast_kinematics_plugin.dir/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp.o[0m
 [01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:[m[K In member function ‘[01m[Kvirtual bool ikfast_kinematics_plugin::IKFastKinematicsPlugin::initialize(const string&, const string&, const string&, const string&, double)[m[K’:
 [01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phantomx_pincher_arm/phantomx_pincher_arm_ikfast_plugin/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp:216:86:[m[K [01;35m[Kwarning: [m[K‘[01m[Kvirtual void kinematics::KinematicsBase::setValues(const string&, const string&, const string&, const string&, double)[m[K’ is deprecated [[01;35m[K-Wdeprecated-declarations[m[K]
@@ -280,7 +279,7 @@ In file included from [01m[K/home/trashfleet/Documents/SwarmUnitROS/src/phanto
                             [01;36m[K^~~~~~~~~~~~~~~~~~~~~~[m[K
 CMakeFiles/phantomx_pincher_arm_moveit_ikfast_kinematics_plugin.dir/build.make:62: recipe for target 'CMakeFiles/phantomx_pincher_arm_moveit_ikfast_kinematics_plugin.dir/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp.o' failed
 make[2]: *** [CMakeFiles/phantomx_pincher_arm_moveit_ikfast_kinematics_plugin.dir/src/phantomx_pincher_arm_ikfast_moveit_plugin.cpp.o] Error 1
-make[1]: *** [CMakeFiles/phantomx_pincher_arm_moveit_ikfast_kinematics_plugin.dir/all] Error 2
 CMakeFiles/Makefile2:67: recipe for target 'CMakeFiles/phantomx_pincher_arm_moveit_ikfast_kinematics_plugin.dir/all' failed
+make[1]: *** [CMakeFiles/phantomx_pincher_arm_moveit_ikfast_kinematics_plugin.dir/all] Error 2
 Makefile:140: recipe for target 'all' failed
 make: *** [all] Error 2
