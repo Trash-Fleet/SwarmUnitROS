@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launch>
     <node pkg="planning" type="base_planner.py" name="base_planner" output="screen"/>
+    <node pkg="planning" type="arm_planner.py" name="arm_planner" output="screen"/>
 </launch>
