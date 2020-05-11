@@ -7,7 +7,7 @@ import math
 
 import numpy as np
 
-from std_msgs.msg import Float32, Bool
+from std_msgs.msg import Float32, Bool, String
 from geometry_msgs.msg import Pose
 from vision.yolo_opencv import detect_trash
 
@@ -22,6 +22,7 @@ class CentralPlanner(object):
         self.state = [0, 0, 0]
         self.search_angle_gap = 10
         self.base_traj_done = False
+        self.arm_traj_done = False
 
         # initialize node
         rospy.init_node('central_planner', anonymous=True)
@@ -29,10 +30,12 @@ class CentralPlanner(object):
         # initialize ROS publishers and subscribers
         # Initialize subscribers
         rospy.Subscriber('base/done', Bool, self.base_done_cb)
-        rospy.Subscriber('base/pose', Pose, self.pose_callback)
+        rospy.Subscriber('arm/done', Pose, self.arm_done_cb)
 
         # Initialize publishers
         self.base_target_pub = rospy.Publisher('/base/target_pose', Pose, queue_size=10)
+        self.arm_target_pub = rospy.Publisher('/arm/target_pose', Pose, queue_size=10)
+        self.arm_task_type_pub = rospy.Publisher('/arm/task', String, queue_size=10)
 
         # initialize tf listener
         self.listener = tf.TransformListener()
@@ -45,19 +48,26 @@ class CentralPlanner(object):
         
         # Search for trash and go to the trash
         self.search_trash()
+        self.locate_trash() #Need to wrie
 
         # Grab trash
+        self.manipulate_trash("grab")
 
         # Go back to home
         self.call_base_action([0,0,0])
 
         # Drop trash 
+        self.trash_location = #Drop the location fo the trash
+        self.manipulate_trash("drop")
 
         # Stop
         print("Mission Complete!")
         
     def base_done_cb(self, msg):
         self.base_traj_done = True
+
+    def arm_done_cb(self, msg):
+        self.arm_traj_done = True
     
     def call_base_action(self, des_state):
         self.base_traj_done = False
@@ -130,6 +140,39 @@ class CentralPlanner(object):
         # Post the trash location to the base planner
         target_position = self.camera_frame_transform(detect_result[0][2],-detect_result[0][0])
         self.call_base_action([target_position[0],target_position[1], self.state[2]])
+
+    def locate_trash(self):
+        return 0
+
+    def manipulate_trash(self, task):
+        self.arm_task_type_pub.publish(task)
+
+        # Wait for the robot to finish its movement
+        while(1):
+            if(base_done_cb == True):
+                base_done_cb = False
+                break
+
+        # Publish the pose trash
+        pose_msg = Pose()
+
+        pose_msg.position.x = self.trash_location[0]
+        pose_msg.position.y = self.trash_location[1]
+        pose_msg.position.z = self.trash_location[2]
+        pose_msg.orientation.x = 0
+        pose_msg.orientation.y = 0
+        pose_msg.orientation.z = 0
+        pose_msg.orientation.w = 0
+
+        self.arm_target_pub.publish(pose_msg)
+
+        # Wait for arm to finish its movement
+        while(1):
+            if(arm_traj_done == True):
+                arm_traj_done = False
+                break
+
+    
 
 if __name__ == '__main__':
     try:
