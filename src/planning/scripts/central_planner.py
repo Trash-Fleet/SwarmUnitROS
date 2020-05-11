@@ -122,6 +122,34 @@ class CentralPlanner(object):
         result = yawMatrix * originalMatrix
         return [result[0,3], result[1,3]]
 
+    def camera_to_arm_transform(self, x, y):
+        R_cam_to_base = eye(4)
+
+        R_cam_to_base = R_cam_to_base.dot(
+            np.matrix([
+                [np.cos(0), -np.sin(0), 0, 0],
+                [np.sin(0), np.cos(0), 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0]
+            ])
+        )
+
+        R_arm_to_base = eye(4)
+        R_arm_to_base = R_arm_to_base.dot(
+            np.matrix([
+                [np.cos(0), -np.sin(0), 0, 0],
+                [np.sin(0), np.cos(0), 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0]
+            ])
+        )
+
+        R_cam_to_arm = np.linalg.inv(R_arm_to_base).dot(R_cam_to_base)
+        h = np.array([x, y, 0, 1]).reshape(-1,1)
+
+        result = R_cam_to_base.dot(h).reshape(-1)
+        return [result[0], result[1], result[2]]
+
     def search_trash(self):
         search_angle = 0
         search_angle_degree =0
