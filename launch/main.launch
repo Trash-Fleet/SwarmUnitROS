@@ -1,3 +1,5 @@
 <launch>
-    <node pkg="planning" type="central_planner.py" name="central_planner" output = "screen"/>
+<!--    <include file="$(find config)/launch/planning.launch"/> -->
+
+    <node pkg="planning" type="central_planner.py" name="central_planner" output="screen"/>
 </launch>

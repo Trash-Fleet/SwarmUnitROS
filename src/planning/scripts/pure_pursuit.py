@@ -1,7 +1,7 @@
 import numpy as np
 
 class PurePursuit(object):
-    def __init__(self, start, end, lookahead=0.07, dist_thresh=0.05):
+    def __init__(self, start, end, lookahead=0.20, dist_thresh=0.05):
         self.start = start
         self.end = end
         self.l = lookahead
@@ -11,8 +11,8 @@ class PurePursuit(object):
         # return 0 if close to end
         x, y, _ = state
         dist = np.sqrt((self.end[1] - y)**2 + (self.end[0] - x)**2)
-        if dist < self.dist_thresh:
-            return 0
+        # if dist < self.dist_thresh:
+        #     return 0
         
         # find lookahead point
         r, point = self.get_lookahead(state)
@@ -33,7 +33,7 @@ class PurePursuit(object):
 
     # https://mathworld.wolfram.com/Circle-LineIntersection.html
     def get_lookahead(self, state):
-        xr, yr, _ = state        
+        xr, yr, th = state        
         x1, y1 = self.start
         x2, y2 = self.end
 
@@ -43,6 +43,9 @@ class PurePursuit(object):
         y2 -= yr
 
         r = self.l
+
+        xf = r * np.cos(th)
+        yf = r * np.sin(th)
 
         dx = x2 - x1
         dy = y2 - y1
@@ -67,16 +70,24 @@ class PurePursuit(object):
             ix2 = (D * dy - self.sign(dy) * dx * np.sqrt(delta)) / (dr ** 2)
             iy2 = (-D * dx - np.abs(dy) * dx * np.sqrt(delta)) / (dr ** 2)
 
-            dist1 = (iy1 - y2) ** 2 + (ix1 - x2) ** 2
-            dist2 = (iy2 - y2) ** 2 + (ix2 - x2) ** 2
+            dist1 = (iy1 - y1) ** 2 + (ix1 - x1) ** 2
+            dist2 = (iy2 - y1) ** 2 + (ix2 - x1) ** 2
             distr = x2 ** 2 + y2 ** 2
 
-            if distr < dist1 and distr < dist2:
-                return [r, [x2 + xr, y2 + yr]]
-            if dist1 < dist2:
+            distf1 = (iy1 - yf) ** 2 + (ix1 - xf) ** 2
+            distf2 = (iy2 - yf) ** 2 + (ix2 - xf) ** 2
+
+            if dist1 > dist2:
                 return [r, [ix1 + xr, iy1 + yr]]
             else:
                 return [r, [ix2 + xr, iy2 + yr]]
+
+            # if distr < dist1 and distr < dist2:
+            #     return [r, [x2 + xr, y2 + yr]]
+            # if dist1 < dist2:
+            #     return [r, [ix1 + xr, iy1 + yr]]
+            # else:
+            #     return [r, [ix2 + xr, iy2 + yr]]
 
 
     def sign(self, x):

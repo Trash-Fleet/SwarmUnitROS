@@ -19,9 +19,11 @@ class MotorParserNode(object):
         self.ser.port = SERIAL_PORT
         self.ser.open()
 
+        rospy.sleep(5)
+
         # send default pid values
-        self.ser.write(b"P%f,I%f,D%f\n" %(4000, 10, 0))
-        self.ser.write(b"p%f,i%f,d%f\n" %(4000, 10, 0))
+        self.ser.write(b"P%f,I%f,D%f\n" %(1000, 30, 0)) # left
+        self.ser.write(b"p%f,i%f,d%f\n" %(1000, 30, 0)) # right
 
         self.motor1_vel_pub = rospy.Publisher('motor1/fb/vel', Float32, queue_size=10)
         self.motor1_enc_pub = rospy.Publisher('motor1/fb/enc', Int32, queue_size=10)
@@ -39,8 +41,10 @@ class MotorParserNode(object):
 
         self.imu_pub = rospy.Publisher('imu', Imu, queue_size=10)
 
+        rospy.loginfo("Motor Parser Node intialized!")
+
         rospy.init_node('motor_parser', anonymous=True)
-        rate = rospy.Rate(25) # 10hz
+        rate = rospy.Rate(25)
         while not rospy.is_shutdown():
             try:
                 msg = self.ser.readline()

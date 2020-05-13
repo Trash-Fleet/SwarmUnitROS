@@ -24,7 +24,7 @@ class BasePlanner(object):
         # initialize attributes
         self.state = [0, 0, 0]
         self.target = [0, 0, 0]
-        self.L = 0.4064
+        self.L = 0.34
         self.dt = 0.05
 
         # initialize node
@@ -67,6 +67,8 @@ class BasePlanner(object):
             self.state[1] = trans[1]
 
             (_,_,yaw) = euler_from_quaternion(rot)
+            yaw = np.arctan2(np.sin(yaw), np.cos(yaw))
+            
             self.state[2] = yaw
 #            print(self.state)
         except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
@@ -86,26 +88,30 @@ class BasePlanner(object):
         (_, _, yaw) = euler_from_quaternion(quat)
         self.target[2] = yaw
 
-        # do pre-rotation
-        point_ang = np.arctan2(self.target[1] - self.state[1], self.target[0] - self.state[0])
-        ang = point_ang - self.state[2]
-
-        reverse = False
-
-#        reverse = abs(ang) > np.pi / 2
-
-#        if reverse:
-#            point_ang += np.pi
-#            point_ang = np.arctan2(np.sin(point_ang), np.cos(point_ang))
-#            ang = point_ang - self.state[2]
-
-        rospy.loginfo("pre-rotate %f radians" %(ang))
-        self.rotate(point_ang)
-
-        # move in straight line
         dist = np.sqrt((self.state[1] - self.target[1])**2 + (self.state[0] - self.target[0])**2)
-        rospy.loginfo("move straight %f m" %(dist))
-        self.move_straight(self.state[:2], self.target[:2], reverse)
+        # print("distance to point: %f" %(dist))
+
+        if dist > 0.04:
+            # do pre-rotation
+            point_ang = np.arctan2(self.target[1] - self.state[1], self.target[0] - self.state[0])
+            ang = point_ang - self.state[2]
+
+            reverse = False
+
+    #        reverse = abs(ang) > np.pi / 2
+
+    #        if reverse:
+    #            point_ang += np.pi
+    #            point_ang = np.arctan2(np.sin(point_ang), np.cos(point_ang))
+    #            ang = point_ang - self.state[2]
+
+            rospy.loginfo("pre-rotate %f radians" %(ang))
+            self.rotate(point_ang)
+
+            # move in straight line
+            dist = np.sqrt((self.state[1] - self.target[1])**2 + (self.state[0] - self.target[0])**2)
+            rospy.loginfo("move straight %f m" %(dist))
+            self.move_straight(self.state[:2], self.target[:2], reverse)
 
         # do post-rotation
         ang = self.target[2] - self.state[2]
@@ -121,14 +127,14 @@ class BasePlanner(object):
 
     def rotate(self, target_ang):
         print("target: %f" %(target_ang))
-        ang_thresh = 0.03
+        ang_thresh = 0.02
 
         ang_diff = target_ang - self.state[2]
         ang_diff = np.arctan2(np.sin(ang_diff), np.cos(ang_diff))
 
-        k = 2
+        k = 1.5
 
-	timeout = 10
+	timeout = 20
 	start_time = time.time()
         timer = time.time()
 
@@ -148,10 +154,11 @@ class BasePlanner(object):
                     self.send_vels(0, -w)
 
         self.send_vels(0, 0)
+        rospy.sleep(1)
 
     def move_straight(self, start, end, reverse):
         dist_thresh = 0.03
-        dist = np.sqrt((start[1] - end[1])**2 + (start[0] - end[0])**2)
+        dist = np.sqrt((self.state[1] - end[1])**2 + (self.state[0] - end[0])**2)
         k = 2
 
         timeout = 10
@@ -160,8 +167,26 @@ class BasePlanner(object):
         start_time = time.time()
         timer = time.time()
 
-        while (abs(dist) > dist_thresh) and (time.time() - start_time < timeout):
+        # get vectors
+        robot_dir_vec = np.array([np.cos(self.state[2]), np.sin(self.state[2])])
+        robot_diff_vec = np.array([end[0] - self.state[0], end[1] - self.state[1]])
+        robot_diff_vec = robot_diff_vec / np.linalg.norm(robot_diff_vec)
+
+        ang_prod = robot_dir_vec.dot(robot_diff_vec)
+        # if ang_prod > 0 -> still going towards goal
+        # else -> going away from goal
+
+        while (abs(dist) > dist_thresh) and ang_prod > 0 and (time.time() - start_time < timeout):
             if (time.time() - timer) > self.dt:
+                # get vectors
+                robot_dir_vec = np.array([np.cos(self.state[2]), np.sin(self.state[2])])
+                robot_diff_vec = np.array([end[0] - self.state[0], end[1] - self.state[1]])
+                robot_diff_vec = robot_diff_vec / np.linalg.norm(robot_diff_vec)
+
+                ang_prod = robot_dir_vec.dot(robot_diff_vec)
+                # if ang_prod > 0 -> still going towards goal
+                # else -> going away from goal
+
                 timer = time.time()
                 dist = np.sqrt((self.state[1] - end[1])**2 + (self.state[0] - end[0])**2)
 
@@ -170,10 +195,13 @@ class BasePlanner(object):
                 if reverse:
                     v = v * -1
 
-                w = pp.get_ang_vel(self.state, v)
+                # w = pp.get_ang_vel(self.state, v)
+                w = 0
+
                 self.send_vels(v, w)
 
         self.send_vels(0, 0)
+        rospy.sleep(1)
 
     def trapezoidal_trajectory(self, d, max_vel, accel, dt):
         t_ramp = max_vel / accel
@@ -230,6 +258,8 @@ class BasePlanner(object):
         if local_max != 0 and local_max > self.vel_max:
             vl = (self.vel_max / local_max) * vl
             vr = (self.vel_max / local_max) * vr
+
+        rospy.loginfo("BASE PLANNER VELS: (%f, %f)" %(vl, vr))
         
         self.left_motor_vel_pub.publish(vl)
         self.right_motor_vel_pub.publish(vr)

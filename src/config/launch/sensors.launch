@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launch>
     <node pkg="parsing" type="motor_parser.py" name="motor_parser" output="screen"/>
+    <include file="$(find turtlebot_arm_moveit_config)/launch/demo.launch"/>
 </launch>

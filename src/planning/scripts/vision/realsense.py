@@ -14,9 +14,12 @@ class realsense():
         # Start streaming
         self.profile = self.pipeline.start(config)
         s = self.profile.get_device().query_sensors()[1]
-        s.set_option(rs.option.exposure, 80)
+        s.set_option(rs.option.enable_auto_exposure, True)
+        # s.set_option(rs.option.exposure, 80)
 
         depth_sensor = self.profile.get_device().first_depth_sensor()
+        # depth_sensor.set_option(rs.option.enable_auto_exposure, True)
+
         self.depth_scale = depth_sensor.get_depth_scale()
 
         self.spat_filter = rs.spatial_filter()          # Spatial    - edge-preserving spatial smoothing

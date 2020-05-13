@@ -112,7 +112,7 @@ class MoveGroupPythonIntefaceTutorial(object):
 
 
   # Debug purpose
-  def go_to_joint_state(self):
+  def go_to_joint_state(self, joint_state):
     # Copy class variables to local variables to make the web tutorials more clear.
     # In practice, you should use the class variables directly unless you have a good
     # reason not to.
@@ -125,18 +125,25 @@ class MoveGroupPythonIntefaceTutorial(object):
     ## The Panda's zero configuration is at a `singularity <https://www.quora.com/Robotics-What-is-meant-by-kinematic-singularity>`_ so the first
     ## thing we want to do is move it to a slightly better configuration.
     # We can get the joint values from the group and adjust some of the values:
+    move_group.clear_pose_targets()
+
     joint_goal = move_group.get_current_joint_values()
-    joint_goal[0] = 0
-    joint_goal[1] = pi/8
-    joint_goal[2] = pi/8
-    joint_goal[3] = pi/8
-    joint_goal[4] = 0
+    joint_goal[0] = joint_state[0]
+    joint_goal[1] = joint_state[1]
+    joint_goal[2] = joint_state[2]
+    joint_goal[3] = joint_state[3]
+    # joint_goal[4] = 0
     # joint_goal[5] = pi/3
     # joint_goal[6] = 0
 
     # The go command can be called with joint values, poses, or without any
     # parameters if you have already set the pose or joint target for the group
-    move_group.go(joint_goal, wait=True)
+    move_group.set_joint_value_target(joint_goal)
+    move_group.set_goal_tolerance(0.01)
+    plan = move_group.plan()
+
+    # move_group.go(joint_goal, wait=True)
+    move_group.execute(plan, wait=True)
 
     # Calling ``stop()`` ensures that there is no residual movement
     move_group.stop()
@@ -147,6 +154,7 @@ class MoveGroupPythonIntefaceTutorial(object):
     current_joints = move_group.get_current_joint_values()
 
     print self.move_group.get_current_pose().pose
+    print self.move_group.get_current_joint_values()
 
     return all_close(joint_goal, current_joints, 0.01)
 
@@ -180,7 +188,11 @@ class MoveGroupPythonIntefaceTutorial(object):
     pose_goal.position.y = y
     pose_goal.position.z = z
 
+    joint_vals = self.move_group.get_current_joint_values()
+
     yaw = np.arctan2(pose_goal.position.y, pose_goal.position.x)
+    # pitch = joint_vals[1] + joint_vals[2] - np.pi/2.0
+
     q = tf.transformations.quaternion_from_euler(0, 0, yaw)
     pose_goal.orientation.x = q[0]
     pose_goal.orientation.y = q[1]
@@ -190,6 +202,7 @@ class MoveGroupPythonIntefaceTutorial(object):
     # pose_goal = move_group.get_random_pose().pose
     # move_group.set_pose_target(pose_goal)
     # move_group.set_joint_value_target(pose_goal, "gripper_link")
+    move_group.set_start_state_to_current_state()
     move_group.set_joint_value_target(pose_goal, True)
     move_group.set_goal_tolerance(0.01)
     plan = move_group.plan()
@@ -204,6 +217,19 @@ class MoveGroupPythonIntefaceTutorial(object):
     display_trajectory.trajectory.append(plan)
     self.display_trajectory_publisher.publish(display_trajectory);
 
+
+    # # duplicate to straighten end effector
+    # joint_vals = self.move_group.get_current_joint_values()
+
+    # yaw = np.arctan2(pose_goal.position.y, pose_goal.position.x)
+    # pitch = joint_vals[1] + joint_vals[2] + joint_vals[3] - np.pi/2.0
+    
+    # q = tf.transformations.quaternion_from_euler(0, pitch, yaw)
+    # pose_goal.orientation.x = q[0]
+    # pose_goal.orientation.y = q[1]
+    # pose_goal.orientation.z = q[2]
+    # pose_goal.orientation.w = q[3]
+
     # Calling `stop()` ensures that there is no residual movement
     move_group.stop()
     
@@ -212,6 +238,7 @@ class MoveGroupPythonIntefaceTutorial(object):
     move_group.clear_pose_targets()
 
     print self.move_group.get_current_pose().pose
+    print self.move_group.get_current_joint_values()
 
     ## END_SUB_TUTORIAL
 
@@ -230,7 +257,8 @@ class ArmPlanner(object):
         # initialize attributes
         self.arm_state = None
         self.arm_task = ""
-        self.move_up_height = 0.3
+        self.up_height = 0.3
+        self.down_height = 0.07
         self.move_forward_length = 0.05
 
         # initialize node
@@ -252,6 +280,10 @@ class ArmPlanner(object):
         self.arm = MoveGroupPythonIntefaceTutorial()
         print("initialized PythonInterface")
 
+        # initialize gripper
+        self.go_home()
+        self.gripper_pub.publish(0)
+
         # start main loop
         rospy.spin()  
 
@@ -260,6 +292,8 @@ class ArmPlanner(object):
         #wait for a task type
         if(self.arm_task != ""):
           pass
+
+        print("ARM TASK: %s" %(self.arm_task))
         
         # Get all the goal position parameters
         goal_position_x = msg.position.x
@@ -284,11 +318,13 @@ class ArmPlanner(object):
           # for waypoints in trajectory:
           #   self.arm.go_to_pose_goal(waypoints[0], waypoints[1], waypoints[2])
           self.arm.go_to_pose_goal(goal_position_x, goal_position_y, goal_position_z)
-          self.move_forward(goal_position_x, goal_position_y, goal_position_z)
+          # self.move_forward(goal_position_x, goal_position_y, goal_position_z)
+          self.move_down(goal_position_x, goal_position_y, goal_position_z)
           rospy.sleep(2)
           self.close_gripper()
           rospy.sleep(2)
           self.move_up(goal_position_x, goal_position_y, goal_position_z)
+          # self.go_home()
         elif(self.arm_task == "drop"):
           # for waypoints in trajectory:
           #   self.arm.go_to_pose_goal(waypoints[0], waypoints[1], waypoints[2])
@@ -302,10 +338,14 @@ class ArmPlanner(object):
 
         # Specify the arm movement is done and reset the arm_task
         self.arm_task = ""
+        print("Publishing Arm Done")
         self.arm_done_pub.publish(True)
 
     def task_callback(self, msg):
         self.arm_task = msg.data
+
+        if self.arm_task == 'home':
+          self.go_home()
 
     def create_trajectory(self, current_position, goal_position):
         x = np.array([current_position[0], goal_position[0]])
@@ -337,7 +377,7 @@ class ArmPlanner(object):
         # return all_close(joint_goal, current_joints, 0.01)
 
     def close_gripper(self):
-        self.gripper_pub.publish(-1.0)
+        self.gripper_pub.publish(-3.0)
         
         # move_group = self.arm.move_group
         # joint_goal = move_group.get_current_joint_values()
@@ -351,6 +391,9 @@ class ArmPlanner(object):
         
         # return all_close(joint_goal, current_joints, 0.01)
 
+    def go_home(self):
+      self.arm.go_to_joint_state([np.pi/2, -2, 2.3, 1.4])
+
     def move_forward(self, goal_position_x, goal_position_y, goal_position_z):
         # current_position_x = self.arm.move_group.get_current_pose().pose.position.x
         # current_position_y = self.arm.move_group.get_current_pose().pose.position.y
@@ -358,10 +401,15 @@ class ArmPlanner(object):
         # current_position = [current_position_x,current_position_y,current_position_z]
 
         yaw = np.arctan2(goal_position_y, goal_position_x)
+        print("MOVING FORWARD YAW: ", yaw)
         diff_x = self.move_forward_length * np.cos(yaw)
         diff_y = self.move_forward_length * np.sin(yaw)
 
         goal_position = [goal_position_x + diff_x,goal_position_y + diff_y,goal_position_z]
+        self.arm.go_to_pose_goal(goal_position[0], goal_position[1], goal_position[2])
+
+    def move_down(self, goal_position_x, goal_position_y, goal_position_z):
+        goal_position = [goal_position_x,goal_position_y,self.down_height]
         self.arm.go_to_pose_goal(goal_position[0], goal_position[1], goal_position[2])
 
     def move_up(self, goal_position_x, goal_position_y, goal_position_z):
@@ -370,7 +418,7 @@ class ArmPlanner(object):
         # current_position_z = self.arm.move_group.get_current_pose().pose.position.z
         # current_position = [current_position_x,current_position_y,current_position_z]
 
-        goal_position = [goal_position_x,goal_position_y,goal_position_z+self.move_up_height]
+        goal_position = [goal_position_x,goal_position_y,self.up_height]
         self.arm.go_to_pose_goal(goal_position[0], goal_position[1], goal_position[2])
 
         # trajectory = self.create_trajectory(current_position, goal_position)
